@@ -2,26 +2,327 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("../fonts/SFProText-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("../fonts/SFProText-Heavy.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("../fonts/SFProText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("../fonts/SFProText-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("../fonts/SFProText-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "SF Pro Text";
+}
+
+.base-wrapper {
+  @apply w-[90%] max-w-[1440px] mx-auto flex flex-col;
+}
+
+.title-1 {
+  @apply 2xl:text-[87px] 3xl:text-[100px] text-[33px] font-medium leading-[1.1];
+}
+
+.title-2 {
+  @apply leading-[1.1] 2xl:text-[60px] text-[30px] font-normal;
+}
+
+.title-3 {
+  @apply leading-[1.1] text-[55px] font-medium;
+}
+
+.heading-1 {
+  @apply leading-[1.1] md:text-[40px] text-[27px] font-medium;
+}
+
+.heading-2 {
+  @apply leading-[1.1] md:text-[38px] text-[27px] font-normal;
+}
+
+.date {
+  @apply leading-[1.1] text-[38px] font-medium;
+}
+
+.cart {
+  @apply leading-[1.1] md:text-[30px] text-[14px] font-normal;
+}
+
+.name-1 {
+  @apply leading-[1.1] text-[30px] font-bold;
+}
+
+.name {
+  @apply text-[22px] leading-[1] font-[590];
+}
+
+.name-2 {
+  @apply leading-[1.1] text-[22px] font-bold;
+}
+
+.sub-heading-1 {
+  @apply leading-[1.1] md:text-[24px] text-[22px] font-semibold;
+}
+
+.sub-heading-2 {
+  @apply leading-[1.1] text-[22px] font-medium;
+}
+
+.sub-heading-3 {
+  @apply leading-[1.1] text-[16px] font-medium;
+}
+
+.body-1 {
+  @apply md:leading-[32px] md:text-[21px] text-[16px] leading-[24px] font-normal;
+}
+
+.body-2 {
+  @apply leading-[1.1] text-[28px] font-normal;
+}
+
+.body {
+  @apply text-[16px] leading-[24px];
+}
+
+.label {
+  @apply leading-[1.1] text-[16px] font-normal;
+}
+
+.small-1 {
+  @apply leading-[1.1] md:text-[12px] text-[13px] font-semibold;
+}
+
+.small-2 {
+  @apply leading-[1.1] md:text-[12px] text-[13px] font-normal;
+}
+
+.btn-primary {
+  @apply leading-[1.1] h-max w-max 3xl:px-[32px] md:px-[24px] md:py-[10px] 3xl:py-[16px] px-[20px] py-[12px] bg-[#007BE9] hover:bg-[#006ED0] active:bg-[#0268C2] disabled:bg-[#86B5DF] cursor-pointer text-white md:font-[21px] md:leading-[32px] rounded-[10px] transition-all;
+}
+
+.btn-secondary {
+  @apply leading-[1.1] h-max w-max 3xl:px-[32px] md:px-[24px] md:py-[10px] 3xl:py-[16px] px-[20px] py-[12px] border-[1px] hover:border-[#007BE9] border-black md:font-[21px] md:leading-[32px] md:rounded-[10px] text-black cursor-pointer hover:text-white bg-white hover:bg-[#007BE9] transition-all rounded-[10px];
+}
+
+.btn-aux {
+  @apply leading-[1.1] h-max w-max md:px-[32px] md:py-[16px] md:font-[21px] md:leading-[32px] md:rounded-[10px] text-black md:text-white bg-white hover:bg-[#007BE9] transition-all cursor-pointer;
+}
+
+.hint {
+  @apply leading-[1.1] text-[10px];
+}
+
+.text {
+  @apply text-[21px] leading-[32px] text-black hover:text-[#007BE9] cursor-pointer transition-all;
+}
+
+.menu-cat {
+  @apply px-[32px] py-[16px] body-1 cursor-pointer hover:text-black hover:bg-[#F5F5F5] active:text-black active:bg-[#F5F5F5] rounded-[10px] text-[#9E9E9E];
+}
+
+.menu-cat-active {
+  @apply px-[32px] py-[16px] body-1 cursor-pointer text-black bg-[#F5F5F5] rounded-[10px];
+}
+
+.swiper-slide {
+  width: auto;
+}
+
+.single-blog .heading {
+  @apply title-3 mt-[36px];
+}
+
+.single-blog img {
+  @apply rounded-[10px];
+}
+
+.single-blog .wp-block-heading {
+  @apply heading-1 mt-[36px];
+}
+
+.single-blog p {
+  @apply mt-[16px] text-[24px];
+}
+
+.single-blog ul {
+  @apply list-disc mt-[16px] text-[24px];
+}
+
+.single-blog ol {
+  @apply list-decimal mt-[16px] ml-[20px] text-[24px];
+}
+
+.single-blog li {
+  @apply ml-[20px];
+}
+
+.react-calendar {
+  border: none !important;
+  width: 100% !important;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  font-family: "General Sans";
+  font-size: 16px !important;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.react-calendar__month-view__weekdays {
+  margin-bottom: 20px !important;
+}
+
+.react-calendar__tile.react-calendar__month-view__days__day {
+  font-size: 16px !important;
+  overflow: hidden;
+  border-radius: 100px;
+  padding: 8px !important;
+
+  height: 60px !important;
+  width: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.react-calendar__tile.react-calendar__month-view__days__day.react-calendar__tile--active {
+  background-color: #264ae6 !important;
+  color: white !important;
+  height: 60px !important;
+  width: 60px !important;
+}
+
+.react-calendar__tile:disabled {
+  color: #a5b3bf !important;
+  text-decoration: line-through !important;
+}
+
+.react-calendar__tile.react-calendar__month-view__days__day {
+  background-color: transparent !important;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: black !important;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-size: 20px !important;
+}
+
+.simplebar-scrollbar::before {
+  background-color: #264ae6 !important;
+  opacity: 1 !important;
+  border-radius: 0 !important;
+}
+
+.simplebar-track.simplebar-vertical {
+  background-color: #e7e7e7;
+}
+
+.cart-box-shadow {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.fc-event {
+  font-family: "Neue Haas Grotesk Display Pro" !important;
+  padding: 10px 20px !important;
+  border-radius: 40px;
+  border: none;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: 100%;
+}
+
+.fc-toolbar-title {
+  font-size: 64px !important;
+  font-weight: 300;
+}
+
+.fc-col-header th {
+  border-top: 0px !important;
+  border-right: 0px !important;
+  border-left: 0px !important;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.fc-col-header thead {
+  border: none !important;
+}
+
+.fc-daygrid-day-top {
+  justify-content: center !important;
+  margin-bottom: 30px !important;
+}
+
+.fc-daygrid-day-number {
+  /* position: absolute !important; */
+  /* left: 50%; */
+  top: 10px;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.fc-col-header {
+  border: none !important;
+}
+.date-select-bar > * {
+  outline: none !important;
+  background-color: white;
+}
+
+.simplebar-content,
+.simplebar-content-wrapper {
+  border: 1px solid white !important;
+}
+
+.date-select-bar .simplebar-scrollbar::before {
+  /* background-color: #007be9 !important; */
+  opacity: 1 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.simplebar-track.simplebar-vertical {
+  background-color: #e0e0e0;
+  width: 8px !important;
+  border-radius: 100px;
+  overflow: hidden;
+  padding: 0 !important;
 }
