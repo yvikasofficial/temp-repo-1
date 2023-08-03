@@ -2,7 +2,6 @@
 import { FC } from "react";
 import { Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import organization from "../../images/organization.png";
 import { FooterType } from "@/interfaces";
 
 interface LogoSwiperProps {
