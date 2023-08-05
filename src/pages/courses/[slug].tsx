@@ -23,6 +23,7 @@ import AddToCartModal from "@/components/AddToCartModal";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "@/store/cart-reducer";
 import Skeleton from "react-loading-skeleton";
+import { getUSDFormat } from "@/utils/cartHelper";
 
 interface CourseDetailsProps {
   data: ProductType;
@@ -142,7 +143,7 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
                       : "Join upcoming class"
                     : "No upcoming events"}
                 </div>
-                <div className="title-2">$395</div>
+                <div className="title-2">{getUSDFormat(data?.price)}</div>
               </div>
             </div>
             <div className="hidden md:flex flex-col text-white bg-[#007BE9] rounded-[10px] md:px-[48px] md:py-[40px] flex-1 justify-evenly">
@@ -167,7 +168,7 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
                 >
                   {isAddedToCart ? "View Cart" : "Join class"}
                 </div>
-                <div className="heading-2">$395</div>
+                <div className="heading-2">{getUSDFormat(data?.price)}</div>
               </div>
             </div>
           </div>

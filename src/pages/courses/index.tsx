@@ -75,6 +75,19 @@ const Courses: FC<CoursesProps> = (props) => {
       <div className="md:mt-[61px] mt-[12px] md:mb-[160px] mb-[80px]">
         <div className="base-wrapper !flex-row">
           <div className="hidden md:flex flex-col w-[20%] gap-[16px] pr-[48px]">
+            <div
+              className={`${
+                !selectedCategory ? "menu-cat-active" : "menu-cat"
+              } `}
+              onClick={() =>
+                setState((prevState) => ({
+                  ...prevState,
+                  selectedCategory: null,
+                }))
+              }
+            >
+              All Courses
+            </div>
             {categories?.map((category) => {
               return (
                 <div
@@ -86,8 +99,7 @@ const Courses: FC<CoursesProps> = (props) => {
                   onClick={() =>
                     setState((prevState) => ({
                       ...prevState,
-                      selectedCategory:
-                        category?.id === selectedCategory?.id ? null : category,
+                      selectedCategory: category,
                     }))
                   }
                   key={category?.id}
@@ -143,6 +155,28 @@ const Courses: FC<CoursesProps> = (props) => {
 
               <div className="w-full md:hidden mb-[40px]">
                 <Swiper spaceBetween={12} slidesPerView={"auto"}>
+                  <SwiperSlide
+                    style={{
+                      width: "max-content",
+                    }}
+                    className="w-auto swiper-slide"
+                    onClick={() =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        selectedCategory: null,
+                      }))
+                    }
+                  >
+                    <div
+                      className={`btn-secondary body-1  ${
+                        !selectedCategory
+                          ? "!bg-[#007BE9] !text-white !border-[#007BE9]"
+                          : "hover:!bg-inherit hover:!text-inherit"
+                      }`}
+                    >
+                      All Courses
+                    </div>
+                  </SwiperSlide>
                   {categories?.map((category) => {
                     return (
                       <SwiperSlide
@@ -154,14 +188,18 @@ const Courses: FC<CoursesProps> = (props) => {
                         onClick={() =>
                           setState((prevState) => ({
                             ...prevState,
-                            selectedCategory:
-                              category?.id === selectedCategory?.id
-                                ? null
-                                : category,
+                            selectedCategory: category,
                           }))
                         }
                       >
-                        <div className="btn-secondary" key={category.id}>
+                        <div
+                          className={`btn-secondary body-1  ${
+                            selectedCategory?.id === category?.id
+                              ? "!bg-[#007BE9] !text-white !border-[#007BE9]"
+                              : "hover:!bg-inherit hover:!text-inherit"
+                          }`}
+                          key={category.id}
+                        >
                           <p
                             dangerouslySetInnerHTML={{ __html: category?.name }}
                           />

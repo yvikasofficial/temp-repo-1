@@ -1,11 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 import Layout from "@/components/Layout";
-import { FC } from "react";
+import { FC, useState } from "react";
 import SearchSrc from "@/images/search.svg";
 import getPageData from "@/utils/getPageData";
 import axios from "axios";
 import { apiRoutes } from "@/config/apiConfig";
 import { Disclosure, Transition } from "@headlessui/react";
+import Close from "@/images/close.svg";
 
 import dorpDown from "@/images/up.png";
 
@@ -13,7 +15,7 @@ interface FAQPageProps {}
 
 const FAQPage: FC<FAQPageProps> = (props: any) => {
   const { data } = props;
-  console.log(data);
+  const [search, setSearch] = useState(null as any);
 
   return (
     <Layout {...props}>
@@ -32,12 +34,45 @@ const FAQPage: FC<FAQPageProps> = (props: any) => {
             <div className="flex bg-[#F3F3F3] mb-[24px] md:mb-[60px] w-full py-[19px] rounded-[10px] pr-[24px]">
               <img src={SearchSrc.src} alt="" className="w-[24px] mx-[20px]" />
               <input
+                value={search}
+                onChange={(e) => setSearch(e?.target?.value)}
                 type="text"
                 placeholder="What courses are you looking for?"
                 className="bg-[#F3F3F3] border-none outline-none w-full body-1"
               />
             </div>
-            {data?.[0]?.acf?.faqs?.map((item: any, i: any) => {
+            {search && (
+              <div
+                className={`px-[20px] py-[5px] rounded-3xl w-max border-[1px] flex items-center gap-[12px] mt-[24px]`}
+              >
+                <div>
+                  {" "}
+                  Showing results for{" "}
+                  <span className="font-semibold">"{search}"</span>
+                </div>
+                <img
+                  onClick={() => {
+                    setSearch("");
+                  }}
+                  className="w-[15px] cursor-pointer"
+                  src={Close?.src}
+                  alt=""
+                />
+              </div>
+            )}
+
+            {[
+              ...(search
+                ? data?.[0]?.acf?.faqs?.filter((item) => {
+                    return (
+                      item?.question
+                        .toLowerCase()
+                        .includes(search?.toLowerCase()) ||
+                      item?.answer.toLowerCase().includes(search?.toLowerCase())
+                    );
+                  })
+                : data?.[0]?.acf?.faqs),
+            ]?.map((item: any, i: any) => {
               return (
                 <Disclosure key={i}>
                   {({ open }) => (

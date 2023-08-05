@@ -38,7 +38,7 @@ const Blog: FC<BlogProps> = (props: any) => {
         const res = await axios.get(`${apiRoutes.BLOGS}`, {
           params: {
             per_page,
-            category: selectedCategory?.id,
+            categories: selectedCategory?.id,
           },
         });
         setState((prevState) => ({

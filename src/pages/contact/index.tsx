@@ -223,9 +223,7 @@ const Contact: NextPage<ContactProps> = (props) => {
               );
             })}
             <div className="flex flex-col col-span-2 md:col-span-1 gap-[10px]">
-              <label className="text-[16px] text-[#585858] font-[600]">
-                How did you hear about us?{" "}
-              </label>
+              <label className="label">How did you hear about us? </label>
               <Selector
                 register={register("How did you hear about us")}
                 placeholder={"Choose Option"}

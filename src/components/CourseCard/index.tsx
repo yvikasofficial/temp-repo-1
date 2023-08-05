@@ -14,6 +14,11 @@ interface CourseCardProps {
 const CourseCard: FC<CourseCardProps> = ({ className, data }) => {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
+
+  const duration = data?.meta_data?.find((meta) => {
+    return meta.key === "duration";
+  });
+
   return (
     <div
       onMouseEnter={() => {
@@ -25,7 +30,7 @@ const CourseCard: FC<CourseCardProps> = ({ className, data }) => {
       onClick={() => router.push(`/courses/${data?.slug}`)}
       className={`${className} cursor-pointer flex flex-col gap-[20px] p-[24px] bg-[#F5F5F5] rounded-[10px]`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         <Image
           src={data?.images?.[0]?.src}
           width={94}
@@ -33,16 +38,27 @@ const CourseCard: FC<CourseCardProps> = ({ className, data }) => {
           className="w-[62px] h-[62px] md:w-[94px] md:h-[94px] bg-gray-200 rounded-[8px] overflow-hidden"
           alt=""
         />
-        <Image src={isHovered ? ArrowBlue : arrow} alt="" />
+        <Image
+          src={isHovered ? ArrowBlue : arrow}
+          alt=""
+          className="w-[55px] h-[55px]"
+        />
       </div>
 
       <div className="h-full flex justify-between flex-col gap-[4px] 2xl:gap-[16px] mt-[40px]">
-        <div className="bg-[#E0E0E0] px-[12px] rounded-[10px] py-[4px] w-max small-2">
-          Spanish
-        </div>
+        {data?.tags?.map((tag) => {
+          return (
+            <div
+              key={tag?.id}
+              className="bg-[#E0E0E0] px-[12px] rounded-[10px] py-[4px] w-max small-2"
+            >
+              {tag?.name}
+            </div>
+          );
+        })}
         <p className="sub-heading-2">{data?.name}</p>
         <div className="flex gap-[4px] !text-[15px] mt-[12px] 2xl:mt-[0px]">
-          <p className="small-1 !text-[15px]">{data?.duration}</p>
+          <p className="small-1 !text-[15px]">{duration?.value}</p>
           <p className="small-2 !text-[15px]">Course</p>
         </div>
       </div>

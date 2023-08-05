@@ -77,6 +77,7 @@ export interface BlogType {
   title: {
     rendered: string;
   };
+  modified: string;
   _embedded: {
     "wp:featuredmedia": FeaturedMediaType[];
     author: AuthorType[];

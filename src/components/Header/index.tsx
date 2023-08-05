@@ -43,7 +43,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <div className="base-wrapper !flex-row py-[24px] md:py-[32px] gap-[60px] items-center 2xl:justify-normal justify-between md:z-[10] z-[100] h-[52px] my-[40px] ">
         <Image
           src={menu}

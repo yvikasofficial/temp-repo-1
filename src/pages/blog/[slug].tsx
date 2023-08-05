@@ -3,6 +3,7 @@ import { apiRoutes } from "@/config/apiConfig";
 import { BlogType } from "@/interfaces";
 import getPageData from "@/utils/getPageData";
 import axios from "axios";
+import moment from "moment";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -12,6 +13,7 @@ interface SingleBlogProps {
 
 const SingleBlog: FC<SingleBlogProps> = (props) => {
   const { data } = props;
+  const category = data?._embedded?.["wp:term"]?.[0]?.[0];
 
   return (
     <Layout {...props}>
@@ -19,13 +21,18 @@ const SingleBlog: FC<SingleBlogProps> = (props) => {
         <div className="h-max mb-[150px] pt-[20px] w-full">
           <div className="w-full">
             <div className="flex 2xl:items-center gap-[12px] 2xl:gap-[40px] 2xl:flex-row flex-col">
-              <div className="2xl:px-[24px] 2xl:py-[10px] px-[12px] py-[4px] rounded-[10px] bg-[#007BE9] label text-white w-max">
-                Employee training and development
+              <div
+                className="2xl:px-[24px] 2xl:py-[10px] px-[12px] py-[4px] rounded-[10px] bg-[#007BE9] label text-white w-max"
+                dangerouslySetInnerHTML={{
+                  __html: category?.name,
+                }}
+              />
+              <div className="label">
+                {moment(data?.modified).format("MMMM DD, YYYY")}
               </div>
-              <div className="label">October 19, 2021</div>
             </div>
             <h1 className="heading">{data?.title?.rendered}</h1>
-            <div className="h-[300px] md:w-full md:h-full mt-[30px]">
+            <div className="md:w-full h-[250px] md:h-[300px] 2xl:h-[500px] mt-[30px]">
               <Image
                 src={data?._embedded?.["wp:featuredmedia"][0]?.source_url}
                 width={850}
@@ -37,13 +44,13 @@ const SingleBlog: FC<SingleBlogProps> = (props) => {
           </div>
           <div className="flex">
             <div
-              className="single-blog-content mt-[48px] 2xl:w-[60%]"
+              className="single-blog-content mt-[48px]"
               dangerouslySetInnerHTML={{
                 __html: data?.content?.rendered,
               }}
             />
 
-            <div className="hidden md:flex flex-col w-[40%]">
+            {/* <div className="hidden md:flex flex-col w-[40%]">
               <div className="flex-1 flex items-center">
                 <div className="flex flex-col p-[32px] bg-[#F5F5F5] rounded-[10px]">
                   <div className="sub-heading-2 mb-[32px]">
@@ -90,7 +97,7 @@ const SingleBlog: FC<SingleBlogProps> = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

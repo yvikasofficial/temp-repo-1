@@ -1,5 +1,5 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Vector 30">
-<path id="Vector 29" d="M1 31L31 1M31 1V31M31 1H1" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="arrow diagonal">
+<path id="Vector 29" d="M10 31L40 1M40 1V31M40 1H10" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

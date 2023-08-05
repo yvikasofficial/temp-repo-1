@@ -127,7 +127,7 @@ const Cart: FC<CartProps> = () => {
                                 {getUSDFormat(getTotalPrice(cart?.items))}
                               </div>
                               <div className="title-2 lg:hidden block">
-                                $395
+                                {getUSDFormat(getTotalPrice(cart?.items))}
                               </div>
                             </div>
                             <div
@@ -253,7 +253,6 @@ const Cart: FC<CartProps> = () => {
                               <div className="title-2 block">
                                 {getUSDFormat(getTotalPrice(cart?.items))}
                               </div>
-                              {/* <div className="title-2 2xl:hidden block">$395</div> */}
                             </div>
                             <div
                               onClick={() => setAddress(true)}

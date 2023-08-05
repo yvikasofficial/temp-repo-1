@@ -9,7 +9,9 @@ interface BlogCardProps {
 
 const BlogCard: FC<BlogCardProps> = ({ data }) => {
   const router = useRouter();
-  console.log(data);
+  const category = data?._embedded?.["wp:term"]?.[0]?.[0];
+
+  console.log(category);
 
   return (
     <div
@@ -24,7 +26,12 @@ const BlogCard: FC<BlogCardProps> = ({ data }) => {
           alt=""
           className="rounded-[10px] w-full h-[184px] object-cover bg-slate-200"
         />
-        <div className="small-2 md:py-[8px] py-[4px] text-white px-[12px] rounded-[10px] bg-[#007BE9] absolute top-[12px] left-[12px] md:top-[16px] md:left-[16px]"></div>
+        {category?.slug !== "uncategorized" && (
+          <div
+            className="small-2 md:py-[8px] py-[4px] text-white px-[12px] rounded-[10px] bg-[#007BE9] absolute top-[12px] left-[12px] md:top-[16px] md:left-[16px]"
+            dangerouslySetInnerHTML={{ __html: category?.name }}
+          />
+        )}
       </div>
       <div className="flex flex-col gap-[12px] md:gap-[16px]">
         <div
