@@ -49,55 +49,6 @@ const SingleBlog: FC<SingleBlogProps> = (props) => {
                 __html: data?.content?.rendered,
               }}
             />
-
-            {/* <div className="hidden md:flex flex-col w-[40%]">
-              <div className="flex-1 flex items-center">
-                <div className="flex flex-col p-[32px] bg-[#F5F5F5] rounded-[10px]">
-                  <div className="sub-heading-2 mb-[32px]">
-                    Explore classes from this article
-                  </div>
-                  <div className="flex flex-col gap-[16px]">
-                    <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                      Business writing
-                    </div>
-                    <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                      Leadership & management
-                    </div>
-                    <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                      Sexual harassment, discrimination and bullying
-                    </div>
-                    <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                      Excel
-                    </div>
-                    <div className="btn-primary !w-full mt-[36px] body-1 text-center">
-                      View all classes
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col p-[32px] bg-[#F5F5F5] rounded-[10px]">
-                <div className="sub-heading-2 mb-[32px]">
-                  Explore classes from this article
-                </div>
-                <div className="flex flex-col gap-[16px]">
-                  <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                    Business writing
-                  </div>
-                  <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                    Leadership & management
-                  </div>
-                  <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                    Sexual harassment, discrimination and bullying
-                  </div>
-                  <div className="px-[32px] py-[16px] body-1 bg-white rounded-[10px]">
-                    Excel
-                  </div>
-                  <div className="btn-primary !w-full mt-[36px] body-1 text-center">
-                    View all bundles
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
