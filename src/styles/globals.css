@@ -127,7 +127,7 @@ body {
 }
 
 .btn-primary {
-  @apply leading-[1.1] h-max w-max 3xl:px-[32px] md:px-[24px] md:py-[10px] 3xl:py-[16px] px-[20px] py-[12px] bg-[#007BE9] hover:bg-[#006ED0] active:bg-[#0268C2] disabled:bg-[#86B5DF] cursor-pointer text-white md:font-[21px] md:leading-[32px] rounded-[10px] transition-all;
+  @apply leading-[1.1] h-max w-full justify-center md:w-max 3xl:px-[32px] md:px-[24px] md:py-[10px] 3xl:py-[16px] px-[20px] py-[12px] bg-[#007BE9] hover:bg-[#006ED0] active:bg-[#0268C2] disabled:bg-[#86B5DF] cursor-pointer text-white md:font-[21px] md:leading-[32px] rounded-[10px] transition-all  flex items-center min-h-[48px] md:h-max text-center md:items-center md:justify-center;
 }
 
 .btn-secondary {

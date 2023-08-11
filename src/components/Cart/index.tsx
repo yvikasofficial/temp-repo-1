@@ -12,10 +12,10 @@ import SimpleBar from "simplebar-react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { removeItemFromCart, toggleCart } from "@/store/cart-reducer";
-import Checkout from "../Checkout";
 import { getTotalPrice, getUSDFormat } from "@/utils/cartHelper";
 
 import { Popover, Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
 
 interface CartProps {
   active?: boolean;
@@ -25,11 +25,18 @@ interface CartProps {
 const Cart: FC<CartProps> = () => {
   const cart = useSelector((globalState: any) => globalState.cart);
   const dispatch = useDispatch();
-
-  const [address, setAddress] = useState(false);
+  const router = useRouter();
 
   return (
     <>
+      {cart?.visible && (
+        <div
+          onClick={() => {
+            dispatch(toggleCart());
+          }}
+          className="hidden 2xl:block fixed top-0 left-0 w-full h-screen"
+        ></div>
+      )}
       {/* desktop view */}
       <div className="relative hidden 2xl:block">
         <Popover>
@@ -60,13 +67,86 @@ const Cart: FC<CartProps> = () => {
                 <Popover.Panel
                   className={`absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 translate-x-[0%] z-[10001] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none outline-none w-max bg-[#F5F5F5] rounded-[10px] `}
                 >
-                  {address ? (
-                    <Checkout />
-                  ) : (
-                    <>
-                      {cart?.items?.length > 0 ? (
-                        <div className="flex flex-col px-[5vw] gap-[60px] my-[60px] min-w-[515px]">
-                          <div className="flex items-center justify-between w-full">
+                  <>
+                    {cart?.items?.length > 0 ? (
+                      <div className="flex flex-col px-[5vw] gap-[60px] my-[60px] min-w-[515px]">
+                        <div className="flex items-center justify-between w-full">
+                          <div className="heading-2 flex gap-[16px] ">
+                            Cart{" "}
+                            <div className="heading-2 text-[#9E9E9E]">
+                              ({cart?.items?.length})
+                            </div>
+                          </div>
+                          <Image
+                            className="cursor-pointer"
+                            onClick={() => dispatch(toggleCart())}
+                            src={closeGrey}
+                            alt=""
+                          />
+                        </div>
+                        <div className="flex flex-col gap-[16px] ">
+                          {cart?.items?.map((item: any, i: any) => {
+                            return (
+                              <div key={i} className="flex gap-[24px]">
+                                <Image
+                                  className="cursor-pointer"
+                                  onClick={() =>
+                                    dispatch(
+                                      removeItemFromCart({
+                                        ...item?.product,
+                                        trigger: true,
+                                      })
+                                    )
+                                  }
+                                  src={closeGrey}
+                                  alt=""
+                                />
+                                <div className="px-[32px] py-[16px] rounded-[10px] bg-white w-full flex gap-[24px] items-center">
+                                  <Image
+                                    width={92}
+                                    height={92}
+                                    src={item?.product?.image}
+                                    alt=""
+                                    className="w-[62px] h-[62px] bg-slate-200"
+                                  />
+                                  <div className="flex flex-col justify-between gap-[16px] w-[220px]">
+                                    <div className="sub-heading-2">
+                                      {item?.product?.name}
+                                    </div>
+                                    <div className="label">
+                                      {item?.product?.duration} course
+                                    </div>
+                                  </div>
+                                  <div className="sub-heading-1">
+                                    {getUSDFormat(item?.product?.price)}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="flex flex-col gap-[24px]">
+                          <div className="flex items-center justify-between">
+                            <div className="body-2 text-[#9E9E9E]">Total </div>
+                            <div className="name-1 lg:block hidden">
+                              {getUSDFormat(getTotalPrice(cart?.items))}
+                            </div>
+                            <div className="title-2 lg:hidden block">
+                              {getUSDFormat(getTotalPrice(cart?.items))}
+                            </div>
+                          </div>
+                          <div
+                            onClick={() => router.push("/checkout")}
+                            className="btn-primary !w-full text-center body-1"
+                          >
+                            Checkout
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex flex-col px-[48px] py-[32px] items-center justify-center h-max min-w-[515px]">
+                          <div className="flex items-center justify-between w-full mb-[60px]">
                             <div className="heading-2 flex gap-[16px] ">
                               Cart{" "}
                               <div className="heading-2 text-[#9E9E9E]">
@@ -80,108 +160,32 @@ const Cart: FC<CartProps> = () => {
                               alt=""
                             />
                           </div>
-                          <div className="flex flex-col gap-[16px] ">
-                            {cart?.items?.map((item: any, i: any) => {
-                              return (
-                                <div key={i} className="flex gap-[24px]">
-                                  <Image
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                      dispatch(
-                                        removeItemFromCart(item?.product)
-                                      )
-                                    }
-                                    src={closeGrey}
-                                    alt=""
-                                  />
-                                  <div className="px-[32px] py-[16px] rounded-[10px] bg-white w-full flex gap-[24px] items-center">
-                                    <Image
-                                      width={92}
-                                      height={92}
-                                      src={item?.product?.image}
-                                      alt=""
-                                      className="w-[62px] h-[62px] bg-slate-200"
-                                    />
-                                    <div className="flex flex-col justify-between gap-[16px] w-[220px]">
-                                      <div className="sub-heading-2">
-                                        {item?.product?.name}
-                                      </div>
-                                      <div className="label">
-                                        {item?.product?.duration} course
-                                      </div>
-                                    </div>
-                                    <div className="sub-heading-1">
-                                      {getUSDFormat(item?.product?.price)}
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
+                          <Image
+                            src={bigCart}
+                            alt=""
+                            className="w-[120px] h-[120px]"
+                          />
+                          <div className="heading-2 mt-[32px] md:mt-[60px]">
+                            Your cart is empty
                           </div>
-                          <div className="flex flex-col gap-[24px]">
-                            <div className="flex items-center justify-between">
-                              <div className="body-2 text-[#9E9E9E]">
-                                Total{" "}
-                              </div>
-                              <div className="name-1 lg:block hidden">
-                                {getUSDFormat(getTotalPrice(cart?.items))}
-                              </div>
-                              <div className="title-2 lg:hidden block">
-                                {getUSDFormat(getTotalPrice(cart?.items))}
-                              </div>
-                            </div>
-                            <div
-                              onClick={() => setAddress(true)}
-                              className="btn-primary !w-full text-center body-1"
-                            >
-                              Checkout
-                            </div>
+                          <div className="body-1 mt-[12px] md:mt-[16px]">
+                            You haven’t added any items yet
                           </div>
+                          <Link
+                            onClick={() => {
+                              dispatch(toggleCart());
+                            }}
+                            href="/courses"
+                            className="w-full"
+                          >
+                            <div className="btn-primary body-1 mt-[40px] md:mt-[52px] !w-full text-center">
+                              Explore our courses
+                            </div>
+                          </Link>
                         </div>
-                      ) : (
-                        <>
-                          <div className="flex flex-col px-[48px] py-[32px] items-center justify-center h-max min-w-[515px]">
-                            <div className="flex items-center justify-between w-full mb-[60px]">
-                              <div className="heading-2 flex gap-[16px] ">
-                                Cart{" "}
-                                <div className="heading-2 text-[#9E9E9E]">
-                                  ({cart?.items?.length})
-                                </div>
-                              </div>
-                              <Image
-                                className="cursor-pointer"
-                                onClick={() => dispatch(toggleCart())}
-                                src={closeGrey}
-                                alt=""
-                              />
-                            </div>
-                            <Image
-                              src={bigCart}
-                              alt=""
-                              className="w-[120px] h-[120px]"
-                            />
-                            <div className="heading-2 mt-[32px] md:mt-[60px]">
-                              Your cart is empty
-                            </div>
-                            <div className="body-1 mt-[12px] md:mt-[16px]">
-                              You haven’t added any items yet
-                            </div>
-                            <Link
-                              onClick={() => {
-                                dispatch(toggleCart());
-                              }}
-                              href="/courses"
-                              className="w-full"
-                            >
-                              <div className="btn-primary body-1 mt-[40px] md:mt-[52px] !w-full text-center">
-                                Explore our courses
-                              </div>
-                            </Link>
-                          </div>
-                        </>
-                      )}
-                    </>
-                  )}
+                      </>
+                    )}
+                  </>
                 </Popover.Panel>
               </Transition>
             </>
@@ -221,19 +225,17 @@ const Cart: FC<CartProps> = () => {
                 />
               </div>
               <SimpleBar style={{ height: "100vh" }}>
-                {address ? (
-                  <Checkout />
-                ) : (
-                  <>
-                    {cart?.items?.length > 0 ? (
-                      <div className="2xl:hidden flex flex-col px-[0px] gap-[48px] h-[80vh] md:pb-[24px]">
-                        <div className="heading-2 flex gap-[16px]">
-                          Cart{" "}
-                          <div className="heading-2 text-[#9E9E9E]">
-                            ({cart?.items?.length})
-                          </div>
+                <>
+                  {cart?.items?.length > 0 ? (
+                    <div className="2xl:hidden flex flex-col px-[0px] gap-[48px] h-[80vh] md:pb-[24px]">
+                      <div className="heading-2 flex gap-[16px]">
+                        Cart{" "}
+                        <div className="heading-2 text-[#9E9E9E]">
+                          ({cart?.items?.length})
                         </div>
-                        <div className="flex flex-1 flex-col justify-between">
+                      </div>
+                      <div className="flex flex-1 flex-col justify-between">
+                        <SimpleBar style={{ maxHeight: 500 }}>
                           <div className="flex flex-col gap-[16px]">
                             {cart?.items?.map((item: any, i: any) => {
                               return (
@@ -245,50 +247,50 @@ const Cart: FC<CartProps> = () => {
                               );
                             })}
                           </div>
-                          <div className="2xl:hidden flex flex-col gap-[24px]">
-                            <div className="flex items-center justify-between">
-                              <div className="sub-heading-2 text-[#9E9E9E]">
-                                Total{" "}
-                              </div>
-                              <div className="title-2 block">
-                                {getUSDFormat(getTotalPrice(cart?.items))}
-                              </div>
+                        </SimpleBar>
+                        <div className="2xl:hidden flex flex-col gap-[24px]">
+                          <div className="flex items-center justify-between">
+                            <div className="sub-heading-2 text-[#9E9E9E]">
+                              Total{" "}
                             </div>
-                            <div
-                              onClick={() => setAddress(true)}
-                              className="btn-primary !w-full text-center body-1"
-                            >
-                              Checkout
+                            <div className="title-2 block">
+                              {getUSDFormat(getTotalPrice(cart?.items))}
                             </div>
+                          </div>
+                          <div
+                            onClick={() => router.push("/checkout")}
+                            className="btn-primary !w-full text-center body-1"
+                          >
+                            Checkout
                           </div>
                         </div>
                       </div>
-                    ) : (
-                      <>
-                        <div className="2xl:hidden flex flex-col items-center justify-center h-[80vh]">
-                          <Image src={bigCart} alt="" />
-                          <div className="heading-2 mt-[32px] md:mt-[60px]">
-                            Your cart is empty
-                          </div>
-                          <div className="body-1 mt-[12px] md:mt-[16px]">
-                            You haven’t added any items yet
-                          </div>
-                          <Link
-                            onClick={() => {
-                              dispatch(toggleCart());
-                            }}
-                            href="/courses"
-                            className="w-full"
-                          >
-                            <div className="btn-primary body-1 mt-[40px] md:mt-[52px] md:w-max !w-full text-center">
-                              Explore our courses
-                            </div>
-                          </Link>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="2xl:hidden flex flex-col items-center justify-center h-[80vh]">
+                        <Image src={bigCart} alt="" />
+                        <div className="heading-2 mt-[32px] md:mt-[60px]">
+                          Your cart is empty
                         </div>
-                      </>
-                    )}
-                  </>
-                )}
+                        <div className="body-1 mt-[12px] md:mt-[16px]">
+                          You haven’t added any items yet
+                        </div>
+                        <Link
+                          onClick={() => {
+                            dispatch(toggleCart());
+                          }}
+                          href="/courses"
+                          className="w-full"
+                        >
+                          <div className="btn-primary body-1 mt-[40px] md:mt-[52px] md:w-max !w-full text-center">
+                            Explore our courses
+                          </div>
+                        </Link>
+                      </div>
+                    </>
+                  )}
+                </>
               </SimpleBar>
             </div>
           </div>

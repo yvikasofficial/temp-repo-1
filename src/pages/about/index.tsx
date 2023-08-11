@@ -62,13 +62,13 @@ const About: FC<AboutProps> = (props: any) => {
       <LogoSwiper data={props?.footer?.[0]} />
       <div className="mt-[80px] md:mt-[160px] base-wrapper">
         <div className="flex flex-col bg-[#F5F5F5] rounded-[10px] 2xl:px-[48px] 2xl:py-[32px] md:p-[24px] px-[20px] py-[16px]">
-          <div className="title-2 mw-[100%] 2xl:w-[50%]">
+          <div className="title-2 w-[100%] 2xl:w-[100%]">
             {pageData?.services?.title}
           </div>
           <div className="md:hidden body mt-[16px]">
             {pageData?.services?.description}
           </div>
-          <div className="md:block hidden body-1 w-[50%] mt-[60px]">
+          <div className="md:block hidden body-1 w-[100%] mt-[60px]">
             {pageData?.services?.description}
           </div>
           <div className="md:hidden body mt-[12px]">
@@ -82,7 +82,7 @@ const About: FC<AboutProps> = (props: any) => {
                     router.push(`/courses?category_id=${category?.id}`);
                   }}
                   key={i}
-                  className="btn-secondary body-1"
+                  className="btn-secondary body-1 hover:!bg-[#007BE9] !bg-transparent"
                 >
                   {category?.name}
                 </div>

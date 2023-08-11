@@ -57,9 +57,11 @@ const CourseCard: FC<CourseCardProps> = ({ className, data }) => {
           );
         })}
         <p className="sub-heading-2">{data?.name}</p>
-        <div className="flex gap-[4px] !text-[15px] mt-[12px] 2xl:mt-[0px]">
-          <p className="small-1 !text-[15px]">{duration?.value}</p>
-          <p className="small-2 !text-[15px]">Course</p>
+        <div className="flex gap-[4px] !text-[15px] mt-[12px] 2xl:mt-[0px] items-center">
+          <p className="font-[590] !text-[15px] leading-[1.1]">
+            {duration?.value}
+          </p>
+          <p className="!text-[15px] leading-[1.1]">Course</p>
         </div>
       </div>
     </div>

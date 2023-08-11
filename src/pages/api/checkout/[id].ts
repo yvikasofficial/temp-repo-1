@@ -6,11 +6,21 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const { method, body } = req;
+  const { id } = req.query;
 
   switch (method) {
-    case "POST":
+    case "GET":
       try {
-        const data = await api.post("orders", body);
+        const data = await api.get(`orders/${id}`, body);
+        res.status(200).json(data?.data);
+      } catch (error: any) {
+        res.status(400).json(error?.data);
+      }
+      break;
+
+    case "PUT":
+      try {
+        const data = await api.put(`orders/${id}`, body);
         res.status(201).json(data?.data);
       } catch (error: any) {
         res.status(400).json(error?.data);

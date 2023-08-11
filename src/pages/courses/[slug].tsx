@@ -126,7 +126,7 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
               />
               <div className="title-2 !md:heading-1">{data?.name}</div>
               <div className="body-1">{data?.description}</div>
-              <div className="flex md:hidden gap-[16px] items-center justify-between">
+              <div className="flex flex-wrap 2xl:hidden gap-[16px] items-center justify-between">
                 <div
                   onClick={
                     isAddedToCart
@@ -146,7 +146,7 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
                 <div className="title-2">{getUSDFormat(data?.price)}</div>
               </div>
             </div>
-            <div className="hidden md:flex flex-col text-white bg-[#007BE9] rounded-[10px] md:px-[48px] md:py-[40px] flex-1 justify-evenly">
+            <div className="hidden 2xl:flex flex-col text-white bg-[#007BE9] rounded-[10px] md:px-[48px] md:py-[40px] flex-1 justify-evenly">
               <div className="heading-1">Join our upcoming class</div>
               {mostRecentDate ? (
                 <div className="cart md:mt-[36px]">
@@ -157,11 +157,14 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
               )}
               <div className="flex justify-between md:mt-[52px]">
                 <div
-                  onClick={
-                    isAddedToCart
-                      ? () => dispatch(toggleCart())
-                      : () => setOpenCart(true)
-                  }
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    if (isAddedToCart) {
+                      dispatch(toggleCart());
+                    } else {
+                      setOpenCart(true);
+                    }
+                  }}
                   className={`btn-secondary !border-[#007BE9] body-1 hover:bg-white hover:text-[#007BE9]  ${
                     mostRecentDate ? "" : "opacity-50 pointer-events-none"
                   }`}
@@ -295,7 +298,7 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="flex md:gap-[48px] gap-[24px] 2xl:w-[50%] w-full flex-col md:flex-row">
+              <div className="flex md:gap-[48px] gap-[24px] md:w-[50%] w-full flex-row">
                 <div className="flex flex-col gap-[16px] w-[50%]">
                   <div className="sub-heading-1">Duration</div>
                   <div className="flex gap-[16px]">

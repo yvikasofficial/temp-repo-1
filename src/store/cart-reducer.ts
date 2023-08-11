@@ -9,6 +9,7 @@ export const cartSlice = createSlice({
       items: [],
       order: null as any,
       visible: false,
+      trigger: 0,
     },
     {
       visible: false,
@@ -45,6 +46,9 @@ export const cartSlice = createSlice({
     removeItemFromCart: (state: any, payload) => {
       const newState = {
         ...state,
+        trigger: payload?.payload?.trigger
+          ? state?.trigger + 1
+          : state?.trigger,
         items: [
           ...state.items?.filter(
             (item: any) => item?.product?.id !== payload?.payload?.id

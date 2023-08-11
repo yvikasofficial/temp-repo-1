@@ -21,4 +21,5 @@ export const apiRoutes = {
   BLOG_PAGE: `${BASE_URL}/wp-json/wp/v2/pages?slug=blogs-page`,
   CALENDER: `${BASE_URL}/wp-json/wl/v1/products`,
   SINGLE_COURSE: `${BASE_URL}/wp-json/wl/v1/product`,
+  CHECKOUT: "/checkout",
 };

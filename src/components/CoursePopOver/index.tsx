@@ -84,7 +84,7 @@ const CoursePopOver: FC<CoursePopOverProps> = ({ categories }) => {
             className={`absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 translate-x-[80%] z-[10001] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none outline-none w-[805px] bg-[#F5F5F5] rounded-[10px] `}
           >
             <div className="flex p-[32px]">
-              <div className="w-[40%] flex flex-col gap-[16px] border-r-[2px] border-[#E0E0E0] bg-yellow">
+              <div className="w-[40%] pr-[48px] flex flex-col gap-[16px] border-r-[2px] border-[#E0E0E0] bg-yellow">
                 {categories?.map((category) => {
                   return (
                     <div
@@ -96,7 +96,7 @@ const CoursePopOver: FC<CoursePopOverProps> = ({ categories }) => {
                       }
                       className={`body-1 cursor-pointer py-[8px] px-[32px] hover:text-[#000000] ${
                         selectedCategory?.id === category?.id
-                          ? "text-black"
+                          ? "text-black bg-white rounded-[10px]"
                           : "text-[#9E9E9E]"
                       }`}
                       key={category.id}
@@ -105,7 +105,7 @@ const CoursePopOver: FC<CoursePopOverProps> = ({ categories }) => {
                   );
                 })}
               </div>
-              <div className="w-[60%] flex flex-col gap-[16px]">
+              <div className="w-[60%] flex flex-col gap-[16px] pl-[48px]">
                 {loading ? (
                   <>
                     {new Array(3).fill(0).map((_, i) => {

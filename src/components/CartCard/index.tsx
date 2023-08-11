@@ -35,8 +35,10 @@ const CartCard: FC<CartCardProps> = ({ className, data, count }) => {
               </div>
             </div>
             <Image
-              onClick={() => dispatch(removeItemFromCart(data))}
-              className="w-[16px] h-[16px]"
+              onClick={() =>
+                dispatch(removeItemFromCart({ ...data, trigger: true }))
+              }
+              className="w-[16px] h-[16px] cursor-pointer"
               alt=""
               src={close}
             />

@@ -75,12 +75,12 @@ const Hero: FC<HeroProps> = ({ data, categories = [] }) => {
           src={illustration}
           className="absolute right-0 bottom-[60px] -z-[10] w-[657px] h-[483px] hidden md:block"
         />
-        <div className="title-1 w-[80%]">{data?.title}</div>
+        <div className="title-1 md:w-[80%]">{data?.title}</div>
         <div className="flex md:mt-[32px] flex-col">
           <div className="heading-2 md:block hidden max-w-[450px]">
             {data?.description}
           </div>
-          <Image src={illustration_1} alt="" className="md:hidden mt-[24px]" />
+          <Image src={illustration_1} alt="" className="md:hidden mt-[0px]" />
           <div className="flex flex-wrap gap-[16px] md:w-[40%] mt-[24px] md:mt-[32px]">
             {[...categories]?.slice(0, 5)?.map((category, i) => {
               return (

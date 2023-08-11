@@ -62,8 +62,10 @@ const ReviewSwiper: FC<ReviewSwiperProps> = ({ data }) => {
                     </div>
                     <div className={`md:hidden name`}>{review?.name}</div>
                     <div
-                      className={`text-[#9e9e9e] transition-all ${
-                        isActive ? "body-1 mb-[24px] " : "label mb-[16px]"
+                      className={`text-[#9e9e9e] transition-all mt-[4px] md:mt-0 ${
+                        isActive
+                          ? "body-1 mb-[12px] md:mb-[24px] "
+                          : "label mb-[16px]"
                       }`}
                     >
                       {review?.role}
@@ -85,14 +87,18 @@ const ReviewSwiper: FC<ReviewSwiperProps> = ({ data }) => {
           ))}
         </div>
         <div className="flex items-center justify-center gap-[48px]">
-          <div ref={prevRef}>
+          <div ref={prevRef} className="2xl:block hidden">
             <Image alt="" src={ellipseLeft} />
           </div>
           <div className="flex">
             {currentSlide} / {data?.length}
           </div>
           <div ref={nextRef}>
-            <Image alt="" src={ellipseLeft} className="rotate-180" />
+            <Image
+              alt=""
+              src={ellipseLeft}
+              className="rotate-180 2xl:block hidden"
+            />
           </div>
         </div>
       </Swiper>

@@ -83,6 +83,13 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                   alt=""
                   className="md:w-[40px] cursor-pointer w-[32px] h-[32px] md:h-[40px] 2xl:hidden block"
                 />
+                <Image src={logo} alt="" className="w-[133px] h-[40px]" />
+                <Image
+                  onClick={() => dispatch(toggleCart())}
+                  src={cart}
+                  alt=""
+                  className="w-[32px] h-[32px] 2xl:hidden block cursor-pointer"
+                />
               </div>
               <div className="flex bg-[#F3F3F3] py-[19px] rounded-[10px] md:w-[35%] mt-[32px] md:mt-[52px] pr-[24px]">
                 <img
@@ -110,19 +117,36 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                   );
                 })}
               </div>
-              <div className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] mt-[21px]">
+              <div
+                onClick={() => router.push("/calendar")}
+                className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] mt-[21px]"
+              >
                 Calender
               </div>
-              <div className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] ">
+              <div
+                onClick={() => router.push("/blog")}
+                className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] "
+              >
                 Blog
               </div>
-              <div className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] ">
+              <div
+                onClick={() => router.push("/about")}
+                className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] "
+              >
                 About
               </div>
-              <div className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] ">
+              <div
+                onClick={() => router.push("/faq")}
+                className="heading-1 border-b-[1px] border-[#E0E0E0] py-[24px] "
+              >
                 FAQ
               </div>
-              <div className="heading-1 py-[24px] ">Contact</div>
+              <div
+                onClick={() => router.push("/contact")}
+                className="heading-1 py-[24px] "
+              >
+                Contact
+              </div>
             </div>
           </SimpleBar>
         </div>

@@ -111,7 +111,7 @@ const Courses: FC<CoursesProps> = (props) => {
           </div>
           <div className="flex md:ml-[48px] flex-col w-full md:w-[80%]">
             <div className="flex justify-between w-full md:flex-row flex-col-reverse">
-              <div className="flex gap-[16px] flex-wrap  md:mt-0 mt-[25px]">
+              <div className="flex gap-[16px] md:mt-0 mt-[25px]">
                 {tags?.map((tag, i) => {
                   return (
                     <div
@@ -122,7 +122,7 @@ const Courses: FC<CoursesProps> = (props) => {
                         }))
                       }
                       key={i}
-                      className={`btn-secondary body-1  ${
+                      className={`btn-secondary body-1 md:!w-max text-center !w-[50%]  ${
                         selectedTag?.id === tag?.id
                           ? "!bg-[#007BE9] !text-white !border-[#007BE9]"
                           : "hover:!bg-inherit hover:!text-inherit"
