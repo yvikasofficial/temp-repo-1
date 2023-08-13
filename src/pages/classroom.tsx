@@ -2,12 +2,13 @@ import Layout from "@/components/Layout";
 import { NextPage } from "next";
 import ImgSrc from "../images/illustration.svg";
 import Image from "next/image";
+import getPageData from "@/utils/getPageData";
 
 interface ClassRoomProps {}
 
-const ClassRoom: NextPage<ClassRoomProps> = () => {
+const ClassRoom: NextPage<ClassRoomProps> = (props: any) => {
   return (
-    <Layout>
+    <Layout {...props}>
       <div className="pb-[80px] md:pb-[160px] base-wrapper">
         <div className="title-1">Classroom rentals</div>
         <div className="2xl:w-[80%] body-1 2xl:mt-[36px] md:mt-[24px] mt-[12px]">
@@ -67,3 +68,13 @@ const ClassRoom: NextPage<ClassRoomProps> = () => {
 };
 
 export default ClassRoom;
+
+export const getServerSideProps = async (props: any) => {
+  const myData = await getPageData(() => null);
+
+  return {
+    props: {
+      ...myData,
+    },
+  };
+};

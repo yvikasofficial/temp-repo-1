@@ -136,7 +136,10 @@ const Cart: FC<CartProps> = () => {
                             </div>
                           </div>
                           <div
-                            onClick={() => router.push("/checkout")}
+                            onClick={() => {
+                              router.push("/checkout");
+                              dispatch(toggleCart());
+                            }}
                             className="btn-primary !w-full text-center body-1"
                           >
                             Checkout
@@ -258,7 +261,10 @@ const Cart: FC<CartProps> = () => {
                             </div>
                           </div>
                           <div
-                            onClick={() => router.push("/checkout")}
+                            onClick={() => {
+                              router.push("/checkout");
+                              dispatch(toggleCart());
+                            }}
                             className="btn-primary !w-full text-center body-1"
                           >
                             Checkout

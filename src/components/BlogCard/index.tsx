@@ -11,8 +11,6 @@ const BlogCard: FC<BlogCardProps> = ({ data }) => {
   const router = useRouter();
   const category = data?._embedded?.["wp:term"]?.[0]?.[0];
 
-  console.log(category);
-
   return (
     <div
       onClick={() => router.push(`/blog/${data?.slug}`)}

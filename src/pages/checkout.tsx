@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "@/components/Button";
 import CartCard from "@/components/CartCard";
@@ -26,10 +27,15 @@ interface DataType {
 
 const Checkout: NextPage<CheckoutProps> = (props: any) => {
   const cart = useSelector((globalState: any) => globalState?.cart);
-  console.log(cart);
+  console.log(cart?.order);
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [coupon, setCoupon] = useState({
+    loading: false,
+    error: false,
+    enteredCode: "",
+  });
   const [state, setState] = useState({
     fetching: false,
     data: null as any,
@@ -42,43 +48,88 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
     setHydrated(true);
   }, []);
 
+  const addCoupon = async () => {
+    try {
+      setCoupon((prevState) => ({ ...prevState, loading: true, error: false }));
+      const orderId = cart.order?.id;
+      const newItems = [
+        ...(cart?.items?.map((el: any) => ({
+          product_id: el?.product?.id,
+          quantity: el?.selectedSeats,
+        })) ?? []),
+        ...cart?.order?.line_items?.map((item: any) => ({
+          id: item?.id,
+          quantity: 0,
+        })),
+      ];
+
+      const res = await axios.put(`/api/checkout/${orderId}`, {
+        coupon_lines: coupon?.enteredCode,
+        line_items: newItems,
+      });
+      dispatch(setOrder(res?.data));
+      setCoupon((prevState) => ({
+        ...prevState,
+        loading: false,
+        enteredCode: "",
+      }));
+    } catch (error) {
+      setCoupon((prevState) => ({ ...prevState, loading: false, error: true }));
+    }
+  };
+
+  const removeCoupon = async () => {
+    try {
+      setCoupon((prevState) => ({ ...prevState, loading: true, error: false }));
+      const orderId = cart.order?.id;
+      const newItems = [
+        ...(cart?.items?.map((el: any) => ({
+          product_id: el?.product?.id,
+          quantity: el?.selectedSeats,
+        })) ?? []),
+        ...cart?.order?.line_items?.map((item: any) => ({
+          id: item?.id,
+          quantity: 0,
+        })),
+      ];
+      const res = await axios.put(`/api/checkout/${orderId}`, {
+        coupon_lines: null,
+        line_items: newItems,
+      });
+      dispatch(setOrder(res?.data));
+      setCoupon((prevState) => ({ ...prevState, loading: false }));
+    } catch (error) {
+      setCoupon((prevState) => ({ ...prevState, loading: false }));
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setState((prevState) => ({ ...prevState, fetching: true }));
+
         if (cart.order) {
+          const newItems = [
+            ...(cart?.items?.map((el: any) => ({
+              product_id: el?.product?.id,
+              quantity: el?.selectedSeats,
+            })) ?? []),
+            ...cart?.order?.line_items?.map((item: any) => ({
+              id: item?.id,
+              quantity: 0,
+            })),
+          ];
           const res = await axios.put(`/api/checkout/${cart.order?.id}`, {
             payment_method: "authnet",
             payment_method_title: "Credit card",
-            line_items: cart?.items?.map((el: any) => ({
-              product_id: el?.product?.id,
-              quantity: el?.selectedSeats,
-            })),
-            shipping_lines: [
-              {
-                method_id: "flat_rate",
-                method_title: "Flat Rate",
-                total: `${getTotalPrice(cart?.items)}`,
-              },
-            ],
+            line_items: newItems,
           });
-          console.log(res?.data);
+          dispatch(setOrder(res?.data));
           setState((prevState) => ({ ...prevState, fetching: false }));
         } else {
           const res = await axios.post("/api/checkout", {
             payment_method: "authnet",
             payment_method_title: "Credit card",
-            line_items: cart?.items?.map((el: any) => ({
-              product_id: el?.product?.id,
-              quantity: el?.selectedSeats,
-            })),
-            shipping_lines: [
-              {
-                method_id: "flat_rate",
-                method_title: "Flat Rate",
-                total: `${getTotalPrice(cart?.items)}`,
-              },
-            ],
           });
           dispatch(setOrder(res?.data));
           setState((prevState) => ({ ...prevState, fetching: false }));
@@ -91,39 +142,28 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
 
   const formSubmit = async (values: any) => {
     try {
-      toast.loading("Processing your order. Please wait.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
       setLoading(true);
-      const res = await axios.post("/api/checkout", {
-        payment_method: "authnet",
-        payment_method_title: "Credit card",
+      const newItems = [
+        ...(cart?.items?.map((el: any) => ({
+          product_id: el?.product?.id,
+          quantity: el?.selectedSeats,
+        })) ?? []),
+        ...cart?.order?.line_items?.map((item: any) => ({
+          id: item?.id,
+          quantity: 0,
+        })),
+      ];
+
+      const res = await axios.put(`/api/checkout/${cart.order?.id}`, {
         billing: {
           ...values,
         },
         shipping: {
           ...values,
         },
-        line_items: cart?.items?.map((el: any) => ({
-          product_id: el?.product?.id,
-          quantity: el?.selectedSeats,
-        })),
-        shipping_lines: [
-          {
-            method_id: "flat_rate",
-            method_title: "Flat Rate",
-            total: `${getTotalPrice(cart?.items)}`,
-          },
-        ],
+        line_items: newItems,
+        coupon_lines: cart?.order?.coupon_lines?.[0]?.code,
       });
-
       dispatch(setOrder(res?.data));
       window.location = res?.data?.payment_url;
     } catch (error) {
@@ -217,7 +257,14 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
     <Layout {...props}>
       <ToastContainer />
       <div className="p-[10x] md:p-[32px] flex flex-col items-start base-wrapper md:pb-[160px] pb-[80px]">
-        <ShowSummary />
+        {!fetching && (
+          <ShowSummary
+            coupon={coupon}
+            setCoupon={setCoupon}
+            addCoupon={addCoupon}
+            removeCoupon={removeCoupon}
+          />
+        )}
         <h3 className="mb-[28px] md:mb-[36px] title-3">Billing Details</h3>
         {fetching ? (
           <div className="min-h-[40vh] w-full">
@@ -243,37 +290,35 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
             </div>
           </div>
         ) : (
-          <div className="flex justify-between pt-[10px] w-full gap-[80px]">
-            <form
-              onSubmit={handleSubmit(formSubmit)}
-              className="w-full 2xl:w-[55%]"
-            >
-              <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[30px] mb-[38px]">
-                  {data.map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-start flex-col col-span-2 md:col-span-1 gap-[10px]"
-                      >
-                        <Input
-                          notRequired={e.notRequired ?? false}
-                          register={register(e.name)}
-                          placeholder={e.placeholder}
-                          title={e.title}
-                          className="w-full"
-                        />
-                        {errors[e.name] && (
-                          <p className="text-[#FF0D0D] text-[14px]">
-                            {errors[e.name].message}
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
+          <form onSubmit={handleSubmit(formSubmit)}>
+            <div className="flex justify-between pt-[10px] w-full gap-[80px]">
+              <div className="w-full 2xl:w-[55%]">
+                <div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[30px] mb-[38px]">
+                    {data.map((e, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="flex items-start flex-col col-span-2 md:col-span-1 gap-[10px]"
+                        >
+                          <Input
+                            notRequired={e.notRequired ?? false}
+                            register={register(e.name)}
+                            placeholder={e.placeholder}
+                            title={e.title}
+                            className="w-full"
+                          />
+                          {errors[e.name] && (
+                            <p className="text-[#FF0D0D] text-[14px]">
+                              {errors[e.name].message}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-              <div className="flex justify-end">
+                {/* <div className="flex justify-end">
                 <Button
                   disabled={loading}
                   // fill="blue"
@@ -281,38 +326,90 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
                 >
                   Complete Order ({getUSDFormat(getTotalPrice(cart?.items))})
                 </Button>
+              </div> */}
               </div>
-            </form>
-            <div className="flex-col gap-[24px] 2xl:flex hidden w-[45%]">
-              <div className="cart">Summary</div>
-              <div className="bg-[#F5F5F5] p-[24px] pl-0 rounded-[10px] flex gap-[24px] mt-[8px]">
-                <Input
-                  placeholder="Apply voucher"
-                  className="bg-white w-full"
-                />
-                <div className="body-1 btn-primary !h-full">Apply</div>
-              </div>
-              <div className="flex flex-col p-[24px] bg-[#F5F5F5] rounded-[10px] gap-[24px]">
-                {cart?.items?.map((item: any, i: any) => {
-                  return (
-                    <CartCard
-                      data={item?.product}
-                      count={item?.selectedSeats}
-                      key={i}
-                    />
-                  );
-                })}
-                <div className="border-[1px] mt-[24px]"></div>
-                <div className="flex items-center justify-between">
-                  <div className="body-2 text-[#9E9E9E]">Total</div>
-                  <div className="name-1">
-                    {getUSDFormat(getTotalPrice(cart?.items))}
+              <div className="flex-col gap-[24px] 2xl:flex hidden w-[45%]">
+                <div className="cart">Summary</div>
+                <div className="bg-[#F5F5F5] p-[24px] pl-0 rounded-[10px] flex gap-[24px] mt-[8px]">
+                  <Input
+                    value={coupon?.enteredCode}
+                    onChange={(e: any) => {
+                      setCoupon((state) => ({
+                        ...state,
+                        enteredCode: e?.target?.value,
+                      }));
+                    }}
+                    placeholder="Apply voucher"
+                    className="bg-white w-full"
+                  />
+                  <div
+                    onClick={addCoupon}
+                    className={`body-1 btn-primary cursor-pointer !h-full ${
+                      coupon?.loading || !coupon?.enteredCode
+                        ? "opacity-50 pointer-events-none"
+                        : ""
+                    }`}
+                  >
+                    Apply
                   </div>
                 </div>
-                <div className="btn-primary !w-full">Proceed to payment</div>
+                {coupon?.error && (
+                  <div className="text-red-500">
+                    This coupon is either invalid or expired
+                  </div>
+                )}
+                {cart?.order?.coupon_lines?.[0] && (
+                  <div className="text-green-500">
+                    Applied code "
+                    {cart?.order?.coupon_lines?.[0]?.code?.toUpperCase()}".{" "}
+                    <span
+                      onClick={removeCoupon}
+                      className={`text-red-500 underline cursor-pointer ${
+                        coupon?.loading ? "opacity-50 pointer-events-none" : ""
+                      }`}
+                    >
+                      Remove
+                    </span>
+                  </div>
+                )}
+                <div className="flex flex-col p-[24px] bg-[#F5F5F5] rounded-[10px] gap-[24px]">
+                  {cart?.items?.map((item: any, i: any) => {
+                    return (
+                      <CartCard
+                        data={item?.product}
+                        count={item?.selectedSeats}
+                        key={i}
+                      />
+                    );
+                  })}
+                  <div className="border-[1px] mt-[24px]"></div>
+                  <div className="flex items-center justify-between">
+                    <div className="body-2 text-[#9E9E9E]">Total</div>
+                    <div className="name-1">
+                      {cart?.order?.coupon_lines?.[0] ? (
+                        <>
+                          <span className="!text-[18px] line-through opacity-50">
+                            {getUSDFormat(
+                              getTotalPrice(cart?.items, cart?.order, true)
+                            )}
+                          </span>
+                          &nbsp;
+                        </>
+                      ) : null}
+                      {getUSDFormat(getTotalPrice(cart?.items, cart?.order))}
+                    </div>
+                  </div>
+
+                  <Button
+                    disabled={loading}
+                    className="rounded-[5px] px-[80px] !w-full"
+                  >
+                    Proceed to payment
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         )}
       </div>
     </Layout>

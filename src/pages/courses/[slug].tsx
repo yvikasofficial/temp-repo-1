@@ -50,7 +50,6 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
             year: activeMonth.format("YYYY"),
           },
         });
-        console.log(res);
 
         setState((prevState) => ({
           ...prevState,

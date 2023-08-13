@@ -7,6 +7,8 @@ interface InputProps {
   name?: string;
   notRequired?: boolean;
   className?: string;
+  value?: any;
+  onChange?: any;
 }
 
 const Input: FC<InputProps> = ({
@@ -15,11 +17,15 @@ const Input: FC<InputProps> = ({
   register,
   className,
   notRequired,
+  value,
+  onChange,
 }) => {
   return (
     <>
       <label className="label">{title}</label>
       <input
+        value={value}
+        onChange={onChange}
         {...register}
         type="text"
         placeholder={placeholder}

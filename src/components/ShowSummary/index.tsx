@@ -4,8 +4,24 @@ import ChevronDownSrc from "../../images/chevron-down.svg";
 import Image from "next/image";
 import CartCard from "../CartCard";
 import Input from "../Input";
+import { useSelector } from "react-redux";
+import { FC } from "react";
 
-export default function ShowSummary() {
+interface ShowSummaryProps {
+  coupon: any;
+  setCoupon: any;
+  addCoupon: any;
+  removeCoupon: any;
+}
+
+const ShowSummary: FC<ShowSummaryProps> = ({
+  coupon,
+  setCoupon,
+  addCoupon,
+  removeCoupon,
+}) => {
+  const cart = useSelector((globalState: any) => globalState?.cart);
+
   return (
     <Disclosure>
       {({ open }) => (
@@ -32,22 +48,65 @@ export default function ShowSummary() {
             }`}
           >
             <div className="bg-[#F5F5F5] p-[24px]">
-              <CartCard />
-              <CartCard />
+              {cart?.items?.map((item: any, i: any) => {
+                return (
+                  <CartCard
+                    key={i}
+                    data={item?.product}
+                    count={item?.selectedSeats}
+                  />
+                );
+              })}
+
               <div className="border-b-[1px] mt-[16px]"></div>
               <div className="bg-[#F5F5F5] p-[24px] pb-0 pl-0 rounded-[10px] flex gap-[24px] mt-[0px] items-center">
                 <Input
+                  value={coupon?.enteredCode}
+                  onChange={(e: any) => {
+                    setCoupon((state) => ({
+                      ...state,
+                      enteredCode: e?.target?.value,
+                    }));
+                  }}
                   placeholder="Apply voucher"
                   className="bg-white w-full"
                 />
-                <div className="body-1 btn-primary md:px-[32px] py-[12px] px-[20px] md:py-[16px]">
+                <div
+                  onClick={addCoupon}
+                  className={`body-1 btn-primary md:px-[32px] py-[12px] px-[20px] md:py-[16px] ${
+                    coupon?.loading || !coupon?.enteredCode
+                      ? "opacity-50 pointer-events-none"
+                      : ""
+                  }`}
+                >
                   Apply
                 </div>
               </div>
+              {coupon?.error && (
+                <div className="text-red-500 mt-[10px]">
+                  This coupon is either invalid or expired
+                </div>
+              )}
+              {cart?.order?.coupon_lines?.[0] && (
+                <div className="text-green-500 mt-[10px]">
+                  Applied code "
+                  {cart?.order?.coupon_lines?.[0]?.code?.toUpperCase()}".{" "}
+                  <span
+                    onClick={removeCoupon}
+                    className={`text-red-500 underline cursor-pointer ${
+                      coupon?.loading ? "opacity-50 pointer-events-none" : ""
+                    }`}
+                  >
+                    Remove
+                  </span>
+                </div>
+              )}
             </div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
   );
-}
+};
+
+export default ShowSummary;

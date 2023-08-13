@@ -1,11 +1,12 @@
 import Layout from "@/components/Layout";
+import getPageData from "@/utils/getPageData";
 import { NextPage } from "next";
 
 interface TrainingProps {}
 
-const Training: NextPage<TrainingProps> = () => {
+const Training: NextPage<TrainingProps> = (props: any) => {
   return (
-    <Layout>
+    <Layout {...props}>
       <div className="md:my-[80px] my-[160px] base-wrapper">
         <div className="title-1">Alliance training vouchers</div>
         <div className="mt-[36px] 2xl:w-[80%] body-1 ">
@@ -72,3 +73,13 @@ const Training: NextPage<TrainingProps> = () => {
 };
 
 export default Training;
+
+export const getServerSideProps = async (props: any) => {
+  const myData = await getPageData(() => null);
+
+  return {
+    props: {
+      ...myData,
+    },
+  };
+};
