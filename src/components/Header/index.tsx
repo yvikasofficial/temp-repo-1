@@ -2,6 +2,7 @@
 import { FC, useEffect, useState } from "react";
 import logo from "../../images/logo.png";
 import cart from "../../images/cart.svg";
+import cartBlue from "../../images/cart-blue.svg";
 import menu from "../../images/menu.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -23,6 +24,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   const { visible } = useSelector((globalState: any) => globalState.cart);
   const [isMenuActive, setMenuActive] = useState(false);
   const [isCartActive, setCartActive] = useState(false);
+  const [isCartHovered, setIsCartHovered] = useState(false);
   const dispatch = useDispatch();
 
   const [hydrated, setHydrated] = useState(false);
@@ -86,7 +88,9 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                 <Image src={logo} alt="" className="w-[133px] h-[40px]" />
                 <Image
                   onClick={() => dispatch(toggleCart())}
-                  src={cart}
+                  onMouseEnter={() => setIsCartHovered(!isCartHovered)}
+                  onMouseLeave={() => setIsCartHovered(!setCartActive)}
+                  src={isCartHovered ? cartBlue : cart}
                   alt=""
                   className="w-[32px] h-[32px] 2xl:hidden block cursor-pointer"
                 />

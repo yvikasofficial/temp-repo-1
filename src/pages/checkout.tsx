@@ -256,7 +256,7 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
   return (
     <Layout {...props}>
       <ToastContainer />
-      <div className="p-[10x] md:p-[32px] flex flex-col items-start base-wrapper md:pb-[160px] pb-[80px]">
+      <div className="base-wrapper md:py-[60px] py-[48px]">
         {!fetching && (
           <ShowSummary
             coupon={coupon}
@@ -291,10 +291,10 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
           </div>
         ) : (
           <form onSubmit={handleSubmit(formSubmit)}>
-            <div className="flex justify-between pt-[10px] w-full gap-[80px]">
-              <div className="w-full 2xl:w-[55%]">
+            <div className="flex justify-between pt-[10px] w-full gap-[192px]">
+              <div className="w-full 2xl:w-[60%]">
                 <div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[30px] mb-[38px]">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[20px] 2xl:gap-[48px] mb-[38px]">
                     {data.map((e, i) => {
                       return (
                         <div
@@ -319,16 +319,16 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
                   </div>
                 </div>
                 {/* <div className="flex justify-end">
-                <Button
-                  disabled={loading}
-                  // fill="blue"
-                  // className="rounded-[5px] px-[80px] !w-max"
-                >
-                  Complete Order ({getUSDFormat(getTotalPrice(cart?.items))})
-                </Button>
-              </div> */}
+          <Button
+            disabled={loading}
+            // fill="blue"
+            // className="rounded-[5px] px-[80px] !w-max"
+          >
+            Complete Order ({getUSDFormat(getTotalPrice(cart?.items))})
+          </Button>
+        </div> */}
               </div>
-              <div className="flex-col gap-[24px] 2xl:flex hidden w-[45%]">
+              <div className="flex-col gap-[24px] 2xl:flex hidden w-[40%] ml-auto">
                 <div className="cart">Summary</div>
                 <div className="bg-[#F5F5F5] p-[24px] pl-0 rounded-[10px] flex gap-[24px] mt-[8px]">
                   <Input
@@ -340,7 +340,7 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
                       }));
                     }}
                     placeholder="Apply voucher"
-                    className="bg-white w-full"
+                    className={`bg-white w-full`}
                   />
                   <div
                     onClick={addCoupon}
@@ -402,7 +402,7 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
 
                   <Button
                     disabled={loading}
-                    className="rounded-[5px] px-[80px] !w-full"
+                    className="rounded-[5px] px-[80px] md:!w-full"
                   >
                     Proceed to payment
                   </Button>
@@ -415,6 +415,9 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
     </Layout>
   );
 };
+// <div className="p-[10x] md:p-[32px] px-0 flex flex-col items-start base-wrapper md:pb-[160px] pb-[80px]">
+
+// </div>
 
 export default Checkout;
 

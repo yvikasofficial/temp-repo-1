@@ -7,6 +7,7 @@ import close from "@/images/close.svg";
 import logo from "@/images/logo.png";
 import closeGrey from "@/images/close-grey.svg";
 import CartSrc from "@/images/cart.svg";
+import CartBlueSrc from "@/images/cart-blue.svg";
 
 import SimpleBar from "simplebar-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +27,7 @@ const Cart: FC<CartProps> = () => {
   const cart = useSelector((globalState: any) => globalState.cart);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [isCartHovered, setIsCartHovered] = useState(false);
 
   return (
     <>
@@ -50,7 +52,9 @@ const Cart: FC<CartProps> = () => {
                 }}
               >
                 <Image
-                  src={CartSrc}
+                  onMouseEnter={() => setIsCartHovered(!isCartHovered)}
+                  onMouseLeave={() => setIsCartHovered(!setIsCartHovered)}
+                  src={isCartHovered ? CartBlueSrc : CartSrc}
                   alt=""
                   className="w-[40px] h-[40px] cursor-pointer"
                 />
