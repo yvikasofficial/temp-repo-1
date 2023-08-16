@@ -86,14 +86,17 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                   className="md:w-[40px] cursor-pointer w-[32px] h-[32px] md:h-[40px] 2xl:hidden block"
                 />
                 <Image src={logo} alt="" className="w-[133px] h-[40px]" />
-                <Image
-                  onClick={() => dispatch(toggleCart())}
-                  onMouseEnter={() => setIsCartHovered(!isCartHovered)}
-                  onMouseLeave={() => setIsCartHovered(!setCartActive)}
-                  src={isCartHovered ? cartBlue : cart}
-                  alt=""
-                  className="w-[32px] h-[32px] 2xl:hidden block cursor-pointer"
-                />
+                <div className="relative">
+                  <Image
+                    onClick={() => dispatch(toggleCart())}
+                    onMouseEnter={() => setIsCartHovered(!isCartHovered)}
+                    onMouseLeave={() => setIsCartHovered(!setCartActive)}
+                    src={isCartHovered ? cartBlue : cart}
+                    alt=""
+                    className="w-[32px] h-[32px] 2xl:hidden block cursor-pointer "
+                  />
+                  <div className="absolute right-0 top-[3px] w-[10px] h-[10px] rounded-full bg-[#e40d0c]"></div>
+                </div>
               </div>
               <div className="flex bg-[#F3F3F3] py-[19px] rounded-[10px] md:w-[35%] mt-[32px] md:mt-[52px] pr-[24px]">
                 <img
