@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const withTM = require("next-transpile-modules")([
+  "@babel/preset-react",
+  "@fullcalendar/core",
+  "@fullcalendar/daygrid",
+  "@fullcalendar/list",
+  "@fullcalendar/react",
+]);
+
+module.exports = withTM({
   reactStrictMode: true,
   images: {
     domains: ["alliancecarstg.wpengine.com"],
   },
-};
-
-module.exports = nextConfig;
+});

@@ -47,13 +47,19 @@ const Hero: FC<HeroProps> = ({ data, categories = [] }) => {
           cancelToken: ourRequest.token,
           params: {
             search: search ? search : undefined,
-            per_page: 4,
           },
         });
         setState((prevState) => ({
           ...prevState,
           loading: false,
-          courses: res?.data,
+          courses: res?.data
+            ?.filter(
+              (course) =>
+                !course?.categories?.find(
+                  (category) => category?.slug === "voucher"
+                )
+            )
+            ?.slice(0, 4),
         }));
       } catch (error) {
         // setState((prevState) => ({ ...prevState, loading: false }));

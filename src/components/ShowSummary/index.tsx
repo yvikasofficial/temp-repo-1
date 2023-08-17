@@ -37,8 +37,8 @@ const ShowSummary: FC<ShowSummaryProps> = ({
             <Image
               src={ChevronDownSrc}
               alt=""
-              className={`rotate-180 w-[24px] h-[24px] ${
-                open ? "rotate-0 transform" : ""
+              className={`w-[24px] h-[24px] duration-500 ${
+                open ? "rotate-0" : "rotate-180"
               } `}
             />
           </Disclosure.Button>

@@ -18,6 +18,8 @@ export const apiRoutes = {
   COURSES_PAGE: `${BASE_URL}/wp-json/wp/v2/pages?slug=courses&_embed`,
   HOME_PAGE: `${BASE_URL}/wp-json/wp/v2/pages?slug=home-page&_embed&acf_format=standard`,
   FAQ_PAGE: `${BASE_URL}/wp-json/wp/v2/pages?slug=faq-page&_embed`,
+  CLASSROOM: `${BASE_URL}/wp-json/wp/v2/pages?slug=classrooms&_embed&acf_format=standard`,
+  VOUCHERS: `${BASE_URL}/wp-json/wp/v2/pages?slug=vouchers&_embed&acf_format=standard`,
   BLOG_PAGE: `${BASE_URL}/wp-json/wp/v2/pages?slug=blogs-page`,
   CALENDER: `${BASE_URL}/wp-json/wl/v1/products`,
   SINGLE_COURSE: `${BASE_URL}/wp-json/wl/v1/product`,

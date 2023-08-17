@@ -233,7 +233,7 @@ const Contact: NextPage<ContactProps> = (props) => {
             <div className="col-span-2 flex flex-col gap-[18px]">
               <CheckBox
                 register={register("Subscribe To Newsletter")}
-                title="Subscribe To Newsletterr"
+                title="Subscribe To Newsletter"
               />
             </div>
             <button

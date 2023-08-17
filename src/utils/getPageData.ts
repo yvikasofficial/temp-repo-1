@@ -8,9 +8,7 @@ const getPageData = async (
   func4 = null as any
 ) => {
   const request = [
-    await api.get(`products/categories`, {
-      per_page: 8,
-    }),
+    await api.get(`products/categories`),
     await axios.get(
       `https://alliancecarstg.wpengine.com/wp-json/wp/v2/footer?acf_format=standard`
     ),

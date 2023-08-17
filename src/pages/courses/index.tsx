@@ -56,7 +56,12 @@ const Courses: FC<CoursesProps> = (props) => {
         setState((prevState) => ({
           ...prevState,
           loading: false,
-          courses: res?.data,
+          courses: res?.data?.filter(
+            (course) =>
+              !course?.categories?.find(
+                (category) => category?.slug === "voucher"
+              )
+          ),
         }));
       } catch (error) {
         // setState((prevState) => ({ ...prevState, loading: false }));

@@ -44,7 +44,7 @@ const SingleBlog: FC<SingleBlogProps> = (props) => {
           </div>
           <div className="flex">
             <div
-              className="single-blog-content mt-[48px]"
+              className="single-blog-content mt-[48px] md:w-[70%]"
               dangerouslySetInnerHTML={{
                 __html: data?.content?.rendered,
               }}

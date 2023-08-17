@@ -37,7 +37,7 @@ const FAQPage: FC<FAQPageProps> = (props: any) => {
                 value={search}
                 onChange={(e) => setSearch(e?.target?.value)}
                 type="text"
-                placeholder="What courses are you looking for?"
+                placeholder="Search using keywords"
                 className="bg-[#F3F3F3] border-none outline-none w-full body-1"
               />
             </div>

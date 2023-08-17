@@ -231,6 +231,14 @@ body {
   width: 60px !important;
 }
 
+.fc-event-title.fc-sticky {
+  font-family: "SF Pro Text" !important;
+}
+
+.fc-event {
+  border-radius: 10px !important;
+}
+
 .react-calendar__tile:disabled {
   color: #a5b3bf !important;
   text-decoration: line-through !important;
@@ -334,4 +342,19 @@ body {
 .rc-checkbox-checked .rc-checkbox-inner {
   background-color: #264ae6 !important;
   border-color: #264ae6 !important;
+}
+
+.fc-list-event-time {
+  display: none !important;
+}
+
+.fc-list-event-title {
+  overflow-wrap: break-word;
+}
+
+.contact-form a {
+  color: #007be9;
+}
+.contact-form p {
+  @apply md:mb-[32px] mb-[12px];
 }

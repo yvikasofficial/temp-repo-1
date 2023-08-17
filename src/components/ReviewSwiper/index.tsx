@@ -25,7 +25,6 @@ const ReviewSwiper: FC<ReviewSwiperProps> = ({ data }) => {
           swiper.navigation.update();
         }}
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        autoplay
         draggable={false}
         onSlideChange={(e) => {
           setCurrentSlide(e.activeIndex);

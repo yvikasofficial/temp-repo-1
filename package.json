@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.22.5",
     "@fullcalendar/core": "^6.1.8",
     "@fullcalendar/daygrid": "^6.1.8",
     "@fullcalendar/list": "^6.1.8",
@@ -29,6 +30,7 @@
     "joi": "^17.9.2",
     "moment": "^2.29.4",
     "next": "13.4.12",
+    "next-transpile-modules": "^10.0.1",
     "nextjs-progressbar": "^0.0.16",
     "postcss": "8.4.27",
     "rc-checkbox": "^3.1.0",

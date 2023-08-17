@@ -85,7 +85,7 @@ const CoursePopOver: FC<CoursePopOverProps> = ({ categories }) => {
           >
             <div className="flex p-[32px]">
               <div className="w-[40%] pr-[48px] flex flex-col gap-[16px] border-r-[2px] border-[#E0E0E0] bg-yellow">
-                {categories?.map((category) => {
+                {categories?.slice(0, 7)?.map((category) => {
                   return (
                     <div
                       onClick={() =>

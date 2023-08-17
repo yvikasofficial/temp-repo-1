@@ -83,9 +83,10 @@ const About: FC<AboutProps> = (props: any) => {
                   }}
                   key={i}
                   className="btn-secondary body-1 hover:!bg-[#007BE9] !bg-transparent"
-                >
-                  {category?.name}
-                </div>
+                  dangerouslySetInnerHTML={{
+                    __html: category?.name,
+                  }}
+                />
               );
             })}
             <div className="btn-primary body-1">All Courses</div>

@@ -318,15 +318,15 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
                     })}
                   </div>
                 </div>
-                {/* <div className="flex justify-end">
-          <Button
-            disabled={loading}
-            // fill="blue"
-            // className="rounded-[5px] px-[80px] !w-max"
-          >
-            Complete Order ({getUSDFormat(getTotalPrice(cart?.items))})
-          </Button>
-        </div> */}
+                <div className="w-full 2xl:hidden">
+                  <button
+                    className={`btn-primary text-center body-1 !w-full  ${
+                      loading ? "opacity-70 pointer-events-none" : ""
+                    }`}
+                  >
+                    Proceed to payment
+                  </button>
+                </div>
               </div>
               <div className="flex-col gap-[24px] 2xl:flex hidden w-[40%] ml-auto">
                 <div className="cart">Summary</div>
@@ -400,12 +400,15 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
                     </div>
                   </div>
 
-                  <Button
-                    disabled={loading}
-                    className="rounded-[5px] px-[80px] md:!w-full"
-                  >
-                    Proceed to payment
-                  </Button>
+                  <div className="w-full">
+                    <button
+                      className={`btn-primary text-center body-1 !w-full  ${
+                        loading ? "opacity-70 pointer-events-none" : ""
+                      }`}
+                    >
+                      Proceed to payment
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
