@@ -21,13 +21,16 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ categories }) => {
   const router = useRouter();
-  const { visible } = useSelector((globalState: any) => globalState.cart);
+  const { visible, items } = useSelector(
+    (globalState: any) => globalState.cart
+  );
   const [isMenuActive, setMenuActive] = useState(false);
   const [isCartActive, setCartActive] = useState(false);
   const [isCartHovered, setIsCartHovered] = useState(false);
   const dispatch = useDispatch();
 
   const [hydrated, setHydrated] = useState(false);
+  console.log(items);
 
   useEffect(() => {
     setHydrated(true);
@@ -95,7 +98,9 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                     alt=""
                     className="w-[32px] h-[32px] 2xl:hidden block cursor-pointer "
                   />
-                  <div className="absolute right-0 top-[3px] w-[10px] h-[10px] rounded-full bg-[#e40d0c]"></div>
+                  {items?.length > 0 && (
+                    <div className="absolute right-0 top-[3px] w-[10px] h-[10px] rounded-full bg-[#e40d0c]"></div>
+                  )}
                 </div>
               </div>
               <div className="flex bg-[#F3F3F3] py-[19px] rounded-[10px] md:w-[35%] mt-[32px] md:mt-[52px] pr-[24px]">

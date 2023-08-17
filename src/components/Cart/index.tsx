@@ -58,7 +58,9 @@ const Cart: FC<CartProps> = () => {
                   alt=""
                   className="w-[40px] h-[40px] cursor-pointer relative"
                 />
-                <div className="absolute right-0 top-[3px] w-[12px] h-[12px] rounded-full bg-[#e40d0c]"></div>
+                {cart?.items?.length > 0 && (
+                  <div className="absolute right-0 top-[3px] w-[12px] h-[12px] rounded-full bg-[#e40d0c]"></div>
+                )}
               </Popover.Button>
               <Transition
                 show={cart?.visible}
@@ -210,8 +212,9 @@ const Cart: FC<CartProps> = () => {
           }`}
           onClick={() => dispatch(toggleCart())}
         />
-        <div className="absolute right-0 top-[3px] w-[10px] h-[10px] rounded-full bg-[#e40d0c]"></div>
-
+        {cart?.items?.length > 0 && (
+          <div className="absolute right-0 top-[3px] w-[10px] h-[10px] rounded-full bg-[#e40d0c]"></div>
+        )}
         {cart?.visible && (
           <div
             className={`flex 2xl:hidden flex-col fixed top-0 left-0 w-full h-screen bg-white z-[100] transition-all  duration-300 ${
