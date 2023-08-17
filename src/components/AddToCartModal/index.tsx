@@ -186,7 +186,7 @@ const AddToCartModal: FC<AddToCartModalProps> = ({ onClose, open, data }) => {
                                 onClick={() => {
                                   setSelectedSeats(selectedSeats + 1);
                                 }}
-                                className="rounded-[10px] cursor-pointer bg-[#007BE9] border-[#007BE9] flex items-center justify-center px-[20px] py-[12px] md:px-[32px] md:py-[16px] border-[1px]"
+                                className="rounded-[10px] cursor-pointer bg-[#007BE9] border-[#007BE9] flex items-center justify-center px-[20px] py-[12px] md:px-[32px] md:py-[16px] border-[1px] "
                               >
                                 <Image
                                   className="w-[32px] h-[32px]"
@@ -203,7 +203,7 @@ const AddToCartModal: FC<AddToCartModalProps> = ({ onClose, open, data }) => {
                             <div className="flex mt-[16px] gap-[16px]">
                               <div
                                 onClick={() => setClassType("in_person")}
-                                className={`btn-secondary body-1 flex-1 text-center ${
+                                className={`btn-secondary body-1 flex-1 text-center px-[20px] py-[12px] md:px-[32px] md:py-[16px] ${
                                   classType === "in_person"
                                     ? "!bg-[#007BE9] !text-white !border-[#007BE9]"
                                     : "hover:!bg-inherit hover:!text-inherit"
@@ -213,7 +213,7 @@ const AddToCartModal: FC<AddToCartModalProps> = ({ onClose, open, data }) => {
                               </div>
                               <div
                                 onClick={() => setClassType("remote_class")}
-                                className={`btn-secondary body-1 flex-1 text-center ${
+                                className={`btn-secondary body-1 flex-1 text-center  px-[20px] py-[12px] md:px-[32px] md:py-[16px] ${
                                   classType === "remote_class"
                                     ? "!bg-[#007BE9] !text-white !border-[#007BE9]"
                                     : "hover:!bg-inherit hover:!text-inherit"
@@ -234,6 +234,7 @@ const AddToCartModal: FC<AddToCartModalProps> = ({ onClose, open, data }) => {
                                     register={register(`name_${i}`)}
                                     placeholder={"Full Name"}
                                     title={`Full Name of Attendee`}
+                                    className=" px-[20px] py-[12px] md:px-[32px] md:py-[16px]"
                                   />
                                   {errors[`name_${i}`] && (
                                     <p className="text-[#FF0D0D] text-[14px]">
@@ -279,7 +280,7 @@ const AddToCartModal: FC<AddToCartModalProps> = ({ onClose, open, data }) => {
                           </div>
                           <button
                             type="submit"
-                            className="btn-primary body-1 !w-full"
+                            className="btn-primary body-1 !w-full px-[20px] py-[12px] md:px-[32px] md:py-[16px] "
                           >
                             Add to cart
                           </button>
