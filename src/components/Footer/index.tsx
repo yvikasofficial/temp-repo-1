@@ -27,15 +27,11 @@ const Footer: FC<FooterProps> = ({ data }) => {
         <div className="flex mt-[40px] md:mt-[36px] justify-between">
           <div className="hidden md:flex flex-col body-1 w-[40%]">
             <p className="text-[#7091AF] ">{data?.acf?.new_description}</p>
-            <div className="flex gap-[16px] mt-[36px] ">
-              <Image alt="" src={pin} />
-              <p>{data?.acf?.contact?.address}</p>
+            <div className="label text-[#FFFFFF] opacity-[0.4000000059604645] ">
+              Providing onsite, in-person, and online employee <br /> training
+              and development classes.
             </div>
-            <div className="flex gap-[16px] mt-[24px]">
-              <Image alt="" src={phone} />
-              <p>{data?.acf?.contact?.phone}</p>
-            </div>
-            <div className="flex gap-[48px] mt-[36px]">
+            <div className="flex gap-[48px] mt-auto">
               <Image
                 className="w-[32px] h-[32px] cursor-pointer"
                 alt=""
@@ -147,15 +143,19 @@ const Footer: FC<FooterProps> = ({ data }) => {
             src={twitter}
           />
         </div>
-        <div className="flex md:flex-row flex-col-reverse md:items-center mt-[60px] gap-[16px] md:gap-[66px]">
+        <div className="flex md:flex-row flex-col-reverse md:items-center mt-[60px] gap-[16px] md:gap-[66px] mx-auto">
           <div className="small-2 md:hidden opacity-[0.4000000059604645]">
             {data?.acf?.copyright}
           </div>
           <div className="small-2 md:hidden opacity-[0.4000000059604645]">
             Privacy & Policy
           </div>
-          <div className="label md:block hidden">{data?.acf?.copyright}</div>
-          <div className="label md:block hidden">Privacy & Policy</div>
+          <div className="label md:block hidden opacity-[0.4000000059604645]">
+            {data?.acf?.copyright}
+          </div>
+          <div className="label md:block hidden opacity-[0.4000000059604645]">
+            Privacy & Policy
+          </div>
         </div>
       </div>
     </div>
