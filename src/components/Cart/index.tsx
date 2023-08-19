@@ -18,6 +18,8 @@ import { getTotalPrice, getUSDFormat } from "@/utils/cartHelper";
 import { Popover, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 
+import VoucherSrc from "@/images/VoucherImage.png";
+
 interface CartProps {
   active?: boolean;
   onClose?: any;
@@ -91,47 +93,70 @@ const Cart: FC<CartProps> = () => {
                             alt=""
                           />
                         </div>
-                        <div className="flex flex-col gap-[16px] ">
-                          {cart?.items?.map((item: any, i: any) => {
-                            return (
-                              <div key={i} className="flex gap-[24px]">
-                                <Image
-                                  className="cursor-pointer"
-                                  onClick={() =>
-                                    dispatch(
-                                      removeItemFromCart({
-                                        ...item?.product,
-                                        trigger: true,
-                                      })
-                                    )
-                                  }
-                                  src={closeGrey}
-                                  alt=""
-                                />
-                                <div className="px-[32px] py-[16px] rounded-[10px] bg-white w-full flex gap-[24px] items-center">
+                        <SimpleBar
+                          style={{
+                            width: 600,
+                            maxHeight: "30vh",
+                          }}
+                        >
+                          <div className="flex flex-col gap-[16px]">
+                            {cart?.items?.map((item: any, i: any) => {
+                              const isVoucher = item?.product?.categories?.find(
+                                (category) => category?.slug === "voucher"
+                              );
+
+                              return (
+                                <div key={i} className="flex gap-[24px]">
                                   <Image
-                                    width={92}
-                                    height={92}
-                                    src={item?.product?.image}
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                      dispatch(
+                                        removeItemFromCart({
+                                          ...item?.product,
+                                          trigger: true,
+                                        })
+                                      )
+                                    }
+                                    src={closeGrey}
                                     alt=""
-                                    className="w-[62px] h-[62px] bg-slate-200"
                                   />
-                                  <div className="flex flex-col justify-between gap-[16px] w-[220px]">
-                                    <div className="sub-heading-2">
-                                      {item?.product?.name}
+                                  <div className="px-[32px] py-[16px] rounded-[10px] bg-white w-full flex gap-[24px] items-center">
+                                    {isVoucher ? (
+                                      <Image
+                                        src={VoucherSrc}
+                                        alt=""
+                                        className="w-[62px] h-[62px] bg-slate-200"
+                                      />
+                                    ) : (
+                                      <Image
+                                        width={92}
+                                        height={92}
+                                        src={item?.product?.image}
+                                        alt=""
+                                        className="w-[62px] h-[62px] bg-slate-200"
+                                      />
+                                    )}
+                                    <div className="flex flex-col justify-between gap-[16px] w-[220px]">
+                                      <div className="sub-heading-2">
+                                        {item?.product?.name}
+                                      </div>
+                                      {isVoucher ? (
+                                        <div className="label">voucher</div>
+                                      ) : (
+                                        <div className="label">
+                                          {item?.product?.duration} course
+                                        </div>
+                                      )}
                                     </div>
-                                    <div className="label">
-                                      {item?.product?.duration} course
+                                    <div className="sub-heading-1">
+                                      {getUSDFormat(item?.product?.price)}
                                     </div>
-                                  </div>
-                                  <div className="sub-heading-1">
-                                    {getUSDFormat(item?.product?.price)}
                                   </div>
                                 </div>
-                              </div>
-                            );
-                          })}
-                        </div>
+                              );
+                            })}
+                          </div>
+                        </SimpleBar>
                         <div className="flex flex-col gap-[24px]">
                           <div className="flex items-center justify-between">
                             <div className="body-2 text-[#9E9E9E]">Total </div>
@@ -155,7 +180,7 @@ const Cart: FC<CartProps> = () => {
                       </div>
                     ) : (
                       <>
-                        <div className="flex flex-col px-[48px] py-[32px] items-center justify-center h-max min-w-[515px]">
+                        <div className="flex flex-col px-[48px] py-[32px] w-[600px] items-center justify-center h-max min-w-[515px]">
                           <div className="flex items-center justify-between w-full mb-[60px]">
                             <div className="heading-2 flex gap-[16px] ">
                               Cart{" "}

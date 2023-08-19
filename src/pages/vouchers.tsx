@@ -1,12 +1,15 @@
+import AddVoucherModal from "@/components/AddVoucherModal";
 import Layout from "@/components/Layout";
 import { apiRoutes } from "@/config/apiConfig";
 import { ProductType } from "@/interfaces";
+import { toggleCart } from "@/store/cart-reducer";
 import { getUSDFormat } from "@/utils/cartHelper";
 import getPageData from "@/utils/getPageData";
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
 
 interface TrainingProps {}
 
@@ -18,7 +21,9 @@ const Training: NextPage<TrainingProps> = (props: any) => {
     vouchers: [] as ProductType[],
   });
   const { loading, vouchers } = state;
-  console.log(vouchers);
+  const [selectedItem, setSelectedItem] = useState(null as null | ProductType);
+  const cart = useSelector((globalState: any) => globalState?.cart);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,9 +49,14 @@ const Training: NextPage<TrainingProps> = (props: any) => {
 
   return (
     <Layout {...props}>
+      <AddVoucherModal
+        data={selectedItem as any}
+        onClose={() => setSelectedItem(null)}
+        open={!!selectedItem}
+      />
       <div className="md:my-[80px] my-[160px] base-wrapper">
         <div className="title-1">{pageData?.title}</div>
-        <div className="mt-[36px]  body-1 ">{pageData?.description}</div>
+        <div className="mt-[36px] body-1">{pageData?.description}</div>
         <div className="flex md:flex-row flex-col 2xl:gap-[48px] gap-[8px] md:gap-[20px] 2xl:mt-[60px] mt-[40px] ">
           {loading ? (
             <>
@@ -62,8 +72,20 @@ const Training: NextPage<TrainingProps> = (props: any) => {
               {vouchers?.map((voucher, i) => {
                 return (
                   <div
+                    onClick={() => {
+                      const isAddedToCart = cart?.items?.find(
+                        (item: any) => item?.product?.id === voucher?.id
+                      );
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+
+                      if (isAddedToCart) {
+                        dispatch(toggleCart());
+                      } else {
+                        setSelectedItem(voucher);
+                      }
+                    }}
                     key={i}
-                    className="px-[20px] py-[16px] md:px-[24px] 2xl:py-[24px] 2xl:px-[32px] bg-[#F5F5F5] gap-[16px] justify-between flex-1 flex items-center rounded-[10px]"
+                    className="cursor-pointer px-[20px] py-[16px] md:px-[24px] 2xl:py-[24px] 2xl:px-[32px] bg-[#F5F5F5] gap-[16px] justify-between flex-1 flex items-center rounded-[10px]"
                   >
                     <div className="cart">{voucher?.name}</div>
                     <div className="flex items-center gap-[12px]">

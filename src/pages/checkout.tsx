@@ -18,6 +18,9 @@ import { useForm } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { BarLoader } from "react-spinners";
+
+import VoucherSrc from "@/images/VoucherImage.png";
 
 interface CheckoutProps {}
 interface DataType {
@@ -255,6 +258,18 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
 
   return (
     <Layout {...props}>
+      {(loading || coupon?.loading) && (
+        <div className="fixed top-0 flex items-center flex-col justify-center left-0 w-[100%] h-screen bg-black z-50 bg-opacity-30">
+          <div className="bg-white p-[50px] md:p-[100px] flex items-center gap-[20px] flex-col justify-center rounded-[10px]">
+            <div className="text-[#007be9] text-[22px] text-center">
+              {coupon?.loading
+                ? "Applying the coupon"
+                : "Processing the payment"}
+            </div>
+            <BarLoader color="#007be9" />
+          </div>
+        </div>
+      )}
       <ToastContainer />
       <div className="base-wrapper md:py-[60px] py-[48px]">
         {!fetching && (

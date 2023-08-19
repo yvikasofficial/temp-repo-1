@@ -286,20 +286,6 @@ const AddToCartModal: FC<AddToCartModalProps> = ({ onClose, open, data }) => {
                           </button>
                         </div>
                       </div>
-                      {/* <div className="gap-[10px] items-end md:items-center border-[#D3D3D3] pt-[20px] flex-col md:flex-row flex justify-between">
-                        <div className="flex gap-[16px] items-center">
-                          <span className="text-[20px]">Total</span>
-                          <h3 className="text-[40px]">${data?.price}</h3>
-                        </div>
-                        <Button
-
-                        // type={"submit"}
-                        // fill={"blue"}
-                        // className="md:!w-max rounded-[5px] px-[52px]"
-                        >
-                          Add to Cart
-                        </Button>
-                      </div> */}
                     </form>
                   </div>
                 </Dialog.Panel>

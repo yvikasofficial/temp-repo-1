@@ -36,33 +36,8 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
   const router = useRouter();
   const [state, setState] = useState({
     loading: false,
-    data: [] as any[],
     activeMonth: moment(),
   });
-  const { activeMonth, data: upcomingData } = state;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setState((prevState) => ({ ...prevState, loading: true }));
-        const res = await axios.get<ProductType[]>(`${apiRoutes.CALENDER}`, {
-          params: {
-            year: activeMonth.format("YYYY"),
-          },
-        });
-
-        setState((prevState) => ({
-          ...prevState,
-          loading: false,
-          data: res?.data?.filter(
-            (item) => moment(item?.start_date) <= moment()
-          ),
-        }));
-      } catch (error) {}
-    };
-
-    fetchData();
-  }, []);
 
   const { data } = props;
 
@@ -78,6 +53,10 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
   const isAddedToCart = cart?.items?.find(
     (item: any) => item?.product?.id === data?.id
   );
+
+  const upcomingDates = sortedDates?.filter((item: any) => {
+    return moment(item?.date) > moment();
+  });
 
   useEffect(() => {
     setHydrated(true);
@@ -176,62 +155,57 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
           </div>
           <div className="md:mt-[60px] flex items-start flex-col-reverse md:gap-[48px]">
             <div className="w-[100%]">
-              <div className="flex items-center justify-between md:mt-0 mt-[40px]">
-                <div className="heading-2">Upcoming classes</div>
-                <div className="body-1 text 2xl:block hidden">
-                  View full schedule
+              {upcomingDates?.length > 0 && (
+                <div className="flex items-center justify-between md:mt-0 mt-[40px]">
+                  <div className="heading-2">Upcoming classes</div>
+                  <div className="body-1 text 2xl:block hidden">
+                    View full schedule
+                  </div>
+                  <Image src={calendar} alt="" className="block 2xl:hidden" />
                 </div>
-                <Image src={calendar} alt="" className="block 2xl:hidden" />
-              </div>
-              <div className="grid items-center justify-between 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-[24px] gap-[16px] md:mt-[36px] 2xl:gap-[16px] 3xl:gap-[48px] md:gap-[24px]">
-                {state?.loading ? (
-                  <>
-                    <div className="w-[100%]">
-                      <Skeleton height={100} />
-                    </div>
-                    <div className="w-[100%]">
-                      <Skeleton height={100} />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {upcomingData?.slice(0, 3).map((course: ProductType, i) => {
-                      return (
-                        <div
-                          onClick={() =>
-                            router.push(`/courses/${course?.slug}`)
-                          }
-                          key={i}
-                          className="p-[24px] bg-[#F5F5F5] flex items-center gap-[36px] h-full rounded-[10px] w-[100%] cursor-pointer"
-                        >
-                          <div className="flex-col flex gap-[4px] justify-between text-center">
-                            <div className="date">
-                              {moment(course?.start_date).format("d")}
-                            </div>
-                            <div className="label text-[#9E9E9E]">
-                              {" "}
-                              {moment(course?.start_date).format("MMM")}
-                            </div>
+              )}
+              {upcomingDates?.length > 0 && (
+                <div className="grid items-center justify-between 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-[24px] gap-[16px] md:mt-[36px] 2xl:gap-[16px] 3xl:gap-[48px] md:gap-[24px]">
+                  {upcomingDates?.slice(0, 3).map((item: any, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="p-[24px] bg-[#F5F5F5] flex items-center gap-[36px] h-full rounded-[10px] w-[100%] cursor-pointer"
+                      >
+                        <div className="flex-col flex gap-[4px] justify-between text-center">
+                          <div className="date">
+                            {moment(item?.date).format("DD")}
                           </div>
-                          <div className="flex flex-col gap-[16px] sub-heading-1 justify-between">
-                            <div className="flex items-center gap-[12px]">
-                              <Image
-                                src={clockGrey}
-                                alt=""
-                                className="w-[24px] h-[24px]"
-                              />
-                              <div className="label">
-                                Thursday, 9:00 AM - 2:00 PM{" "}
-                              </div>
-                            </div>
-                            {course?.name}
+                          <div className="label text-[#9E9E9E]">
+                            {" "}
+                            {moment(item?.date).format("MMM")}
                           </div>
                         </div>
-                      );
-                    })}
-                  </>
-                )}
-              </div>
+                        <div className="flex flex-col gap-[16px] sub-heading-1 justify-between">
+                          <div className="flex items-center gap-[12px]">
+                            <Image
+                              src={clockGrey}
+                              alt=""
+                              className="w-[24px] h-[24px]"
+                            />
+                            <div className="label">
+                              {moment(item?.date).format("dddd")},{" "}
+                              {moment(item?.start_time, ["HH:mm:ss"]).format(
+                                "h:mm A"
+                              )}{" "}
+                              -{" "}
+                              {moment(item?.end_time, ["HH:mm:ss"]).format(
+                                "h:mm A"
+                              )}
+                            </div>
+                          </div>
+                          {data?.name}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
               <div className="md:mt-[60px] mt-[40px]">
                 <div className="heading-2">Course outline</div>
                 <div className="w-full md:mt-[36px] flex flex-col mt-[24px]">
