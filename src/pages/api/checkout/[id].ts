@@ -60,6 +60,12 @@ export default async function handler(
         } else if (body?.coupon_lines === null) {
           body.coupon_lines = [];
         }
+        if (body?.notes) {
+          await api.post(`orders/${id}/notes`, {
+            note: body?.notes,
+          });
+          body.notes = undefined;
+        }
 
         const data = await api.put(`orders/${id}`, body);
         res.status(201).json(data?.data);

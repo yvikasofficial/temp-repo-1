@@ -157,6 +157,29 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
         })),
       ];
 
+      let notes = "";
+      cart?.items?.map((item: any) => {
+        notes = `
+        ${notes}
+
+        ===========================
+        
+        Product Id: ${item?.product?.id}
+        Product Name: ${item?.product?.name} 
+        Product Slug: ${item?.product?.slug}
+        No of Seats Selected: ${item?.selectedSeats}
+        `;
+
+        new Array(item?.selectedSeats).fill(0).forEach((_, i) => {
+          notes = `
+          ${notes}
+
+          Person ${i + 1}'s Name: ${item?.[`name_${i}`]}
+          Person ${i + 1}'s Email: ${item?.[`email_${i}`]}
+          `;
+        });
+      });
+
       const res = await axios.put(`/api/checkout/${cart.order?.id}`, {
         billing: {
           ...values,
@@ -166,6 +189,7 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
         },
         line_items: newItems,
         coupon_lines: cart?.order?.coupon_lines?.[0]?.code,
+        notes,
       });
       dispatch(setOrder(res?.data));
       window.location = res?.data?.payment_url;
