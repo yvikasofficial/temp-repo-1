@@ -160,12 +160,12 @@ const Contact: NextPage<ContactProps> = (props) => {
   ];
 
   const people = [
-    { name: "Wade Cooper" },
-    { name: "Arlene Mccoy" },
-    { name: "Devon Webb" },
-    { name: "Tom Cook" },
-    { name: "Tanya Fox" },
-    { name: "Hellen Schmidt" },
+    { name: "Radio" },
+    { name: "TV" },
+    { name: "Newspaper" },
+    { name: "Employer" },
+    { name: "Friend" },
+    { name: "Other" },
   ];
   const checkboxData = [
     {
