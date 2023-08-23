@@ -12,9 +12,15 @@ interface CartCardProps {
   className?: any;
   data: ProductType;
   count?: any;
+  isCheckout?: boolean;
 }
 
-const CartCard: FC<CartCardProps> = ({ className, data, count }) => {
+const CartCard: FC<CartCardProps> = ({
+  className,
+  data,
+  count,
+  isCheckout,
+}) => {
   const dispatch = useDispatch();
   const isVoucher = data?.categories?.find(
     (category) => category?.slug === "voucher"
@@ -43,12 +49,19 @@ const CartCard: FC<CartCardProps> = ({ className, data, count }) => {
           )}
           <div className="flex-1 flex items-center justify-between gap-[16px] w-full">
             <div className="flex flex-col gap-[8px] ">
-              <div className="cart">{data?.name}</div>
-              {isVoucher ? (
-                <div className="label">voucher</div>
-              ) : (
-                <div className="label">{data?.duration} course</div>
+              <div className={`cart ${isCheckout ? "md:!text-[16px]" : ""}`}>
+                {data?.name}
+              </div>
+              {isCheckout ? null : (
+                <>
+                  {isVoucher ? (
+                    <div className="label">voucher</div>
+                  ) : (
+                    <div className="label">{data?.duration} course</div>
+                  )}
+                </>
               )}
+
               <div className="text-[20px] font-[590] mt-[4px]">
                 {getUSDFormat(parseInt(data?.price, 10) * count)}
               </div>

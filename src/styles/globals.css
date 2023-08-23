@@ -319,11 +319,6 @@ body {
   background-color: white;
 }
 
-.simplebar-content,
-.simplebar-content-wrapper {
-  border: 1px solid white !important;
-}
-
 .date-select-bar .simplebar-scrollbar::before {
   /* background-color: #007be9 !important; */
   opacity: 1 !important;

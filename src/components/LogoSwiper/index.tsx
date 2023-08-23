@@ -14,12 +14,33 @@ const LogoSwiper: FC<LogoSwiperProps> = ({ data }) => {
       spaceBetween={50}
       slidesPerView={"auto"}
       autoplay={{
-        delay: 0,
+        delay: 1,
         disableOnInteraction: false,
+        pauseOnMouseEnter: false,
+        stopOnLastSlide: false,
+        waitForTransition: true,
+      }}
+      breakpoints={{
+        1024: {
+          slidesPerView: 10,
+          spaceBetween: 16,
+        },
+        767: {
+          slidesPerView: 6,
+          spaceBetween: 16,
+        },
+        540: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+        },
+        0: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
       }}
       speed={1000}
       modules={[Autoplay]}
-      loop
+      loop={true}
     >
       {[...data?.acf?.logos, ...data?.acf?.logos]?.map((logo, i) => {
         return (

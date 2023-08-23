@@ -415,6 +415,7 @@ const Checkout: NextPage<CheckoutProps> = (props: any) => {
                   {cart?.items?.map((item: any, i: any) => {
                     return (
                       <CartCard
+                        isCheckout
                         data={item?.product}
                         count={item?.selectedSeats}
                         key={i}
