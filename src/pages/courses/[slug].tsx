@@ -262,15 +262,14 @@ const CourseDetails: FC<CourseDetailsProps> = (props) => {
               </div>
             </div>
             <div className="w-[100%] flex items-start 2xl:flex-row flex-col-reverse 2xl:gap-[85px]">
-              <div className="flex flex-col gap-[16px] 2xl:w-[50%] 2xl:mt-[0] mt-[24px]">
-                <div className="sub-heading-1">At course completion</div>
-                <div className="flex gap-[16px]">
-                  <div className="body-1">
-                    You should have knowledge on using SmartArt, transitions,
-                    animations, tables, and linked charts
+              {data?.at_course_completion && (
+                <div className="flex flex-col gap-[16px] 2xl:w-[50%] 2xl:mt-[0] mt-[24px]">
+                  <div className="sub-heading-1">At course completion</div>
+                  <div className="flex gap-[16px]">
+                    <div className="body-1">{data?.at_course_completion}</div>
                   </div>
                 </div>
-              </div>
+              )}
               <div className="flex md:gap-[48px] gap-[24px] md:w-[50%] w-full flex-row">
                 <div className="flex flex-col gap-[16px] w-[50%]">
                   <div className="sub-heading-1">Duration</div>

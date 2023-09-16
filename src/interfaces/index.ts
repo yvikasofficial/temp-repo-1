@@ -17,6 +17,7 @@ export interface ProductType {
   remote_class: boolean;
   reviews: ReviewType[];
   regular_price: string;
+  at_course_completion: string;
 }
 
 export interface ReviewType {
