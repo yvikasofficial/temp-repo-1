@@ -11,6 +11,7 @@ export default async function handler(
   switch (method) {
     case "GET":
       const data = await api.get("products", query);
+
       res.status(200).json(data?.data);
       break;
 

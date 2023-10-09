@@ -11,7 +11,7 @@ import Cookie from "@/images/Cookie.png";
 import SearchSrc from "@/images/search.svg";
 import CourseCard from "@/components/CourseCard";
 
-import { HomeHeroProps } from "@/pages";
+import { HomeCourseProps, HomeHeroProps } from "@/pages";
 import { CategoryType, ProductType } from "@/interfaces";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 interface HeroProps {
   data: HomeHeroProps;
   categories?: CategoryType[];
+  courseData?: ProductType[];
 }
 
 interface HeroCoursesStateProps {
@@ -28,7 +29,7 @@ interface HeroCoursesStateProps {
   search: string | null;
 }
 
-const Hero: FC<HeroProps> = ({ data, categories = [] }) => {
+const Hero: FC<HeroProps> = ({ data, categories = [], courseData }) => {
   const [state, setState] = useState<HeroCoursesStateProps>({
     loading: false,
     courses: [],
@@ -36,6 +37,8 @@ const Hero: FC<HeroProps> = ({ data, categories = [] }) => {
   });
   const { courses, loading, search } = state;
   const router = useRouter();
+
+  console.log(courseData);
 
   useEffect(() => {
     const ourRequest = axios.CancelToken.source();
@@ -171,7 +174,7 @@ const Hero: FC<HeroProps> = ({ data, categories = [] }) => {
                 );
               })}
           </>
-        ) : courses?.length === 0 ? (
+        ) : (search ? courses : courseData)?.length === 0 ? (
           <>
             <div className="min-h-[280px] flex flex-col items-center justify-center w-full">
               <Image className="w-[180px] h-[180px]" src={Cookie} alt="" />
@@ -182,7 +185,7 @@ const Hero: FC<HeroProps> = ({ data, categories = [] }) => {
           </>
         ) : (
           <>
-            {courses?.map((item, i) => {
+            {(search ? courses : courseData)?.map((item, i) => {
               return <CourseCard key={i} data={item} />;
             })}
           </>

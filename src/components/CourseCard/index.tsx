@@ -32,7 +32,9 @@ const CourseCard: FC<CourseCardProps> = ({ className, data }) => {
     >
       <div className="flex items-start justify-between">
         <Image
-          src={data?.images?.[0]?.src}
+          src={
+            data?.images?.[0]?.src ?? data?.yoast_head_json?.og_image?.[0]?.url
+          }
           width={94}
           height={94}
           className="w-[62px] h-[62px] md:w-[94px] md:h-[94px] bg-gray-200 rounded-[8px] overflow-hidden"
@@ -56,10 +58,15 @@ const CourseCard: FC<CourseCardProps> = ({ className, data }) => {
             </div>
           );
         })}
-        <p className="sub-heading-2">{data?.name}</p>
+        <p
+          className="sub-heading-2"
+          dangerouslySetInnerHTML={{
+            __html: data?.name ?? data?.title?.rendered,
+          }}
+        />
         <div className="flex gap-[4px] !text-[15px] mt-[12px] 2xl:mt-[0px] items-center">
           <p className="font-[590] !text-[15px] leading-[1.1]">
-            {duration?.value}
+            {duration?.value ?? data?.acf?.duration}
           </p>
           <p className="!text-[15px] leading-[1.1]">Course</p>
         </div>

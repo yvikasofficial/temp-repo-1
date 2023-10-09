@@ -5,7 +5,12 @@ import LogoSwiper from "@/components/LogoSwiper";
 import ReviewSwiper from "@/components/ReviewSwiper";
 import FrequentlyAsked from "@/components/FrequentlyAsked";
 import { FC } from "react";
-import { CategoryType, FooterType, ProductTagType } from "@/interfaces";
+import {
+  CategoryType,
+  FooterType,
+  ProductTagType,
+  ProductType,
+} from "@/interfaces";
 import Hero from "@/modules/home/Hero";
 import getPageData from "@/utils/getPageData";
 import api, { apiRoutes } from "@/config/apiConfig";
@@ -34,7 +39,7 @@ interface HomeProps {
   data: {
     acf: {
       hero: HomeHeroProps;
-      courses: HomeCourseProps;
+      courses: ProductType[];
       reviews: HomeReviewsProps[];
       faqs: HomeFAQsProps[];
     };
@@ -47,9 +52,15 @@ interface HomeProps {
 const Home: FC<HomeProps> = (props) => {
   const { data, footer, categories } = props;
 
+  console.log(data);
+
   return (
     <Layout {...props}>
-      <Hero categories={categories} data={data?.acf?.hero} />
+      <Hero
+        courseData={props?.data?.["_embedded"]?.["acf:post"]}
+        categories={categories}
+        data={data?.acf?.hero}
+      />
       <div className="base-wrapper">
         <div className="heading-2 text-center mb-[24px] md:mb-[36px] md:block hidden">
           Join these top organizations <br /> who’ve used alliance to up-skill

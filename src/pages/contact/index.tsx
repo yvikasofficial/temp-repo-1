@@ -35,11 +35,14 @@ interface DataType {
   "Subscribe to: Alliances Monthly Newsletter": string;
 }
 
-const Contact: NextPage<ContactProps> = (props) => {
+const Contact: NextPage<ContactProps> = (props: any) => {
   const [state, setState] = useState({
     loading: false,
   });
   const { loading } = state;
+  const { footer } = props;
+
+  console.log(footer);
 
   const schema = Joi.object({
     "First Name": Joi.string().min(3).max(100).required().label("First Name"),

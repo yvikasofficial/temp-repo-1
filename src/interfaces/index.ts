@@ -2,6 +2,7 @@ export interface ProductType {
   name: string;
   slug: string;
   id: string;
+  ID: string;
   images: ProductImageType[];
   categories: CategoryType[];
   tags: ProductTagType[];
@@ -18,6 +19,13 @@ export interface ProductType {
   reviews: ReviewType[];
   regular_price: string;
   at_course_completion: string;
+  yoast_head_json: any;
+  title: {
+    rendered: string;
+  };
+  acf: {
+    duration: string;
+  };
 }
 
 export interface ReviewType {
